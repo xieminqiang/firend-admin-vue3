@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <hamburger
-      :is-active="sidebar.opened"
+      :is-active="appStore.sidebarOpened"
       class="hamburger-container"
       @toggleClick="toggleSideBar"
     />
@@ -12,16 +12,16 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <div class="user-avatar">
-            {{ user.real_name }}
+            {{ userStore.real_name || '用户' }}
           </div>
-          <el-icon><el-icon-caret-bottom /></el-icon>
+          <el-icon><CaretBottom /></el-icon>
         </div>
-        <template v-slot:dropdown>
+        <template #dropdown>
           <el-dropdown-menu class="user-dropdown">
             <router-link to="/">
-              <el-dropdown-item> 主页 </el-dropdown-item>
+              <el-dropdown-item>主页</el-dropdown-item>
             </router-link>
-            <el-dropdown-item divided @click="logout">
+            <el-dropdown-item divided @click="handleLogout">
               <span style="display: block">退出登录</span>
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -31,31 +31,42 @@
   </div>
 </template>
 
-<script>
-import { CaretBottom as ElIconCaretBottom } from '@element-plus/icons'
-import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+<script setup>
+import { CaretBottom } from '@element-plus/icons-vue'
+import { useRouter, useRoute } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import Breadcrumb from '@/components/Breadcrumb/index.vue'
+import Hamburger from '@/components/Hamburger/index.vue'
+import { useAppStore } from '@/stores/modules/useAppStore'
+import { useUserStore } from '@/stores/modules/useUserStore'
 
-export default {
-  components: {
-    Breadcrumb,
-    Hamburger,
-    ElIconCaretBottom,
-  },
-  computed: {
-    ...mapGetters(['sidebar', 'user']),
-  },
-  methods: {
-    toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
-    },
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-      location.reload()
-    },
-  },
+// 使用Pinia store
+const appStore = useAppStore()
+const userStore = useUserStore()
+
+// 使用Vue Router
+const router = useRouter()
+const route = useRoute()
+
+// 切换侧边栏
+const toggleSideBar = () => {
+  appStore.toggleSidebar()
+}
+
+// 退出登录
+const handleLogout = async () => {
+  try {
+    await userStore.logout()
+    ElMessage.success('退出登录成功')
+    router.push(`/login?redirect=${route.fullPath}`)
+    // 在Vue3中推荐使用router.go(0)替代location.reload()
+    setTimeout(() => {
+      router.go(0)
+    }, 1000)
+  } catch (error) {
+    console.error('退出登录失败:', error)
+    ElMessage.error('退出登录失败')
+  }
 }
 </script>
 

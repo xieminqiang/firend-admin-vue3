@@ -66,14 +66,39 @@ module.exports = {
             // webpack 5 polyfill 配置
             fallback: {
                 "path": require.resolve("path-browserify"),
-                "os": false,
+                "os": require.resolve("os-browserify/browser"),
                 "crypto": false
             }
         },
         // Node.js v18+ 优化配置
         optimization: {
             usedExports: true,
-            sideEffects: false
+            sideEffects: false,
+            splitChunks: {
+                chunks: 'all',
+                cacheGroups: {
+                    // 分离第三方库
+                    vendor: {
+                        name: 'chunk-vendors',
+                        test: /[\\/]node_modules[\\/]/,
+                        priority: 10,
+                        chunks: 'initial'
+                    },
+                    // 分离Element Plus
+                    elementPlus: {
+                        name: 'chunk-elementPlus',
+                        priority: 20,
+                        test: /[\\/]node_modules[\\/]_?element-plus(.*)/
+                    },
+                    // 分离Vue相关
+                    vue: {
+                        name: 'chunk-vue',
+                        test: /[\\/]node_modules[\\/](vue|vue-router|pinia)/,
+                        priority: 30,
+                        chunks: 'all'
+                    }
+                }
+            }
         }
     },
     chainWebpack(config) {
@@ -147,9 +172,9 @@ module.exports = {
                                     chunks: 'initial' // only package third parties that are initially dependent
                                 },
                                 elementUI: {
-                                    name: 'chunk-elementUI', // split elementUI into a single package
-                                    priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-                                    test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+                                    name: 'chunk-elementPlus', // 将elementPlus分成一个包
+                                    priority: 20, // 重量需要大于libs和app，否则会被打包到libs或app中
+                                    test: /[\\/]node_modules[\\/]_?element-plus(.*)/ // 为了适应cnpm
                                 },
                                 commons: {
                                     name: 'chunk-commons',

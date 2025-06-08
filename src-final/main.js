@@ -4,11 +4,12 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import '@/styles/index.scss' // global css
 
 import App from './App.vue'
-import { createPinia } from 'pinia'
+import pinia from './stores' // 引入Pinia状态管理
 import router from './router'
 
 import '@/icons' // icon
@@ -41,9 +42,6 @@ chat.registerPlugin({ 'tim-profanity-filter-plugin': TIMProfanityFilterPlugin })
 // 创建Vue3应用实例
 const app = createApp(App)
 
-// 创建Pinia状态管理
-const pinia = createPinia()
-
 // 全局属性配置
 app.config.globalProperties.Tim = chat
 app.config.globalProperties.$echarts = echarts
@@ -51,11 +49,16 @@ app.config.globalProperties.routerAppend = (path, pathToAppend) => {
   return path + (path.endsWith('/') ? '' : '/') + pathToAppend
 }
 
+// 注册Element Plus图标
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
+
 // 注册插件
 app.use(ElementPlus)
 app.use(permission)
 app.use(VueContextMenu)
-app.use(pinia)
+app.use(pinia) // 使用Pinia状态管理
 app.use(router)
 
 // 挂载应用

@@ -1,5 +1,4 @@
-import * as Vue from 'vue'
-import * as VueRouter from 'vue-router'
+import { createRouter, createWebHashHistory, defineAsyncComponent } from 'vue-router'
 import adminUser from './modules/user'
 import order from './modules/order'
 import topic from './modules/topic'
@@ -35,13 +34,13 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/login',
-    component: Vue.defineAsyncComponent(() => import('@/views/login/index')),
+    component: defineAsyncComponent(() => import('@/views/login/index.vue')),
     hidden: true,
   },
 
   {
     path: '/404',
-    component: Vue.defineAsyncComponent(() => import('@/views/404')),
+    component: defineAsyncComponent(() => import('@/views/404.vue')),
     hidden: true,
   },
 
@@ -53,44 +52,65 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         name: 'Dashboard',
-        component: Vue.defineAsyncComponent(
-          () => import('@/views/dashboard/index')
-        ),
+        component: defineAsyncComponent(() => import('@/views/dashboard/index.vue')),
         meta: { title: '首页', icon: 'dashboard' },
       },
     ],
   },
 
   {
-    path: 'external-link',
+    path: '/external-link',
     component: Layout,
     hidden: true,
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' },
+        path: '/external-link/vue-element-admin',
+        name: 'ExternalLink',
+        component: defineAsyncComponent(() => import('@/views/redirect/index.vue')),
+        meta: { 
+          title: 'External Link', 
+          icon: 'link',
+          externalLink: 'https://panjiachen.github.io/vue-element-admin-site/#/'
+        },
       },
     ],
   },
+
+  // 404页面必须放在最后 !!!
+  { 
+    path: '/:pathMatch(.*)*', 
+    redirect: '/404', 
+    hidden: true 
+  }
 ]
 
 export const asyncRoutes = [adminUser, order, topic, system, chat, service]
 
-const createRouter = () =>
-  VueRouter.createRouter({
-    history: VueRouter.createWebHashHistory(),
-    routes: constantRoutes, // mode: 'history', // require service support
+const createRouterInstance = () =>
+  createRouter({
+    history: createWebHashHistory(process.env.BASE_URL),
+    routes: constantRoutes,
     scrollBehavior: () => ({
+      left: 0,
       top: 0,
     }),
   })
 
-const router = createRouter()
+const router = createRouterInstance()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouterInstance()
+  // 清除所有动态路由
+  asyncRoutes.forEach(route => {
+    if (route.name) {
+      router.removeRoute(route.name)
+    }
+  })
+  // 重新添加基础路由
+  constantRoutes.forEach(route => {
+    router.addRoute(route)
+  })
 }
 
 export default router

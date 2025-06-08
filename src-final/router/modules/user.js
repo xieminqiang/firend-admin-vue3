@@ -1,63 +1,80 @@
-import * as Vue from 'vue'
+import { defineAsyncComponent } from 'vue'
 import Layout from '@/layout'
 
 const adminRouter = {
   path: '/admin',
   component: Layout,
-  name: 'admin',
+  name: 'Admin',
   redirect: '/admin/user',
-  meta: { title: '后台管理', icon: 'example' },
+  meta: { 
+    title: '后台管理', 
+    icon: 'example',
+    roles: ['admin'] // 权限控制
+  },
   alwaysShow: true,
   children: [
     {
       path: 'back/user',
-      name: 'admin-user',
-      component: Vue.defineAsyncComponent(
-        () => import('@/views/admin/user/back/index')
-      ),
-      meta: { title: '后台用户', icon: 'table' },
+      name: 'AdminUser',
+      component: defineAsyncComponent(() => import('@/views/admin/user/back/index.vue')),
+      meta: { 
+        title: '后台用户', 
+        icon: 'table',
+        keepAlive: true // 页面缓存
+      },
     },
     {
       path: 'role',
-      name: 'admin-role',
-      component: Vue.defineAsyncComponent(
-        () => import('@/views/admin/role/index')
-      ),
-      meta: { title: '角色管理', icon: 'table' },
+      name: 'AdminRole',
+      component: defineAsyncComponent(() => import('@/views/admin/role/index.vue')),
+      meta: { 
+        title: '角色管理', 
+        icon: 'table',
+        keepAlive: true
+      },
     },
     {
       path: 'user/back/add',
-      name: 'admin-user-add',
+      name: 'AdminUserAdd',
       hidden: true,
-      component: Vue.defineAsyncComponent(
-        () => import('@/views/admin/user/back/add')
-      ),
-      meta: { title: '添加用户', icon: 'table' },
+      component: defineAsyncComponent(() => import('@/views/admin/user/back/add.vue')),
+      meta: { 
+        title: '添加用户', 
+        icon: 'table',
+        activeMenu: '/admin/back/user' // 激活的菜单项
+      },
     },
     {
-      path: 'user/back/edit',
-      name: 'admin-user-edit',
+      path: 'user/back/edit/:id(\\d+)',
+      name: 'AdminUserEdit',
       hidden: true,
-      component: Vue.defineAsyncComponent(
-        () => import('@/views/admin/user/back/edit')
-      ),
-      meta: { title: '编辑用户', icon: 'table' },
+      component: defineAsyncComponent(() => import('@/views/admin/user/back/edit.vue')),
+      meta: { 
+        title: '编辑用户', 
+        icon: 'table',
+        activeMenu: '/admin/back/user'
+      },
+      props: true // 允许传递路由参数作为props
     },
     {
       path: 'user',
-      name: 'client-user',
-      component: Vue.defineAsyncComponent(
-        () => import('@/views/admin/user/front/index')
-      ),
-      meta: { title: '前台用户', icon: 'table' },
+      name: 'ClientUser',
+      component: defineAsyncComponent(() => import('@/views/admin/user/front/index.vue')),
+      meta: { 
+        title: '前台用户', 
+        icon: 'table',
+        keepAlive: true
+      },
     },
     {
       path: 'user/group',
-      name: 'client-user-group',
-      component: Vue.defineAsyncComponent(
-        () => import('@/views/admin/user/front/group')
-      ),
-      meta: { title: '前台用户统计', icon: 'table' },
+      name: 'ClientUserGroup',
+      component: defineAsyncComponent(() => import('@/views/admin/user/front/group.vue')),
+      meta: { 
+        title: '前台用户统计', 
+        icon: 'table',
+        keepAlive: true
+      },
     },
   ],
 }
