@@ -1,0 +1,443 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './sidebar.scss';
+
+// 🎨 伴集 Admin - 全局精美样式
+
+// === 全局字体和基础样式 ===
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  line-height: 1.6;
+}
+
+// === 选择器重置 ===
+* {
+  box-sizing: border-box;
+}
+
+// === 滚动条美化 ===
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 107, 157, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.3) 0%, rgba(79, 172, 254, 0.3) 100%);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.5) 0%, rgba(79, 172, 254, 0.5) 100%);
+  }
+}
+
+// === 链接样式 ===
+a {
+  color: $primaryColor;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: $secondaryColor;
+    text-decoration: underline;
+  }
+}
+
+// === 标题样式优化 ===
+h1, h2, h3, h4, h5, h6 {
+  color: #1e293b;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+// === 段落样式 ===
+p {
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+// === 精美的通用组件样式 ===
+.love-card {
+  background: white;
+  border-radius: $borderRadiusLarge;
+  box-shadow: $shadowLight;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 107, 157, 0.1);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadowHeavy;
+    border-color: rgba(255, 107, 157, 0.2);
+  }
+}
+
+.love-button {
+  background: $gradientPrimary;
+  color: white;
+  border: none;
+  border-radius: $borderRadiusMedium;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: $shadowLight;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadowMedium;
+    background: linear-gradient(135deg, #ff5a8a 0%, #3f9cfe 100%);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.secondary {
+    background: $gradientSecondary;
+  }
+
+  &.success {
+    background: $gradientSuccess;
+  }
+}
+
+// === 输入框增强样式 ===
+.love-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: $borderRadiusMedium;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: white;
+
+  &:focus {
+    outline: none;
+    border-color: $primaryColor;
+    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+  }
+
+  &:hover {
+    border-color: $secondaryColor;
+  }
+}
+
+// === 标签增强样式 ===
+.love-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: $borderRadiusSmall;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+
+  &.primary {
+    background: rgba(255, 107, 157, 0.1);
+    color: $primaryColor;
+  }
+
+  &.success {
+    background: rgba(107, 207, 126, 0.1);
+    color: $successColor;
+  }
+
+  &.warning {
+    background: rgba(255, 185, 70, 0.1);
+    color: $warningColor;
+  }
+
+  &.danger {
+    background: rgba(255, 107, 107, 0.1);
+    color: $errorColor;
+  }
+}
+
+// === 页面布局容器 ===
+.love-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.love-section {
+  margin-bottom: 40px;
+}
+
+// === 表格增强样式 ===
+.love-table {
+  background: white;
+  border-radius: $borderRadiusLarge;
+  overflow: hidden;
+  box-shadow: $shadowLight;
+
+  .el-table__header {
+    background: $gradientSecondary;
+
+    th {
+      color: white;
+      font-weight: 600;
+      background: transparent !important;
+    }
+  }
+
+  .el-table__body {
+    tr:hover {
+      background: rgba(255, 107, 157, 0.03) !important;
+    }
+  }
+}
+
+// === 响应式网格系统 ===
+.love-grid {
+  display: grid;
+  gap: 24px;
+
+  &.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  &.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  &.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  @media (max-width: 768px) {
+    &.cols-2,
+    &.cols-3,
+    &.cols-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    &.cols-3,
+    &.cols-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+// === 精美的加载动画 ===
+.love-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 107, 157, 0.3);
+  border-radius: 50%;
+  border-top-color: $primaryColor;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// === 页面过渡动画 ===
+.love-fade-enter-active,
+.love-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.love-fade-enter,
+.love-fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+// === 成功状态样式 ===
+.love-success {
+  background: linear-gradient(135deg, rgba(107, 207, 126, 0.1) 0%, rgba(54, 209, 220, 0.1) 100%);
+  border: 1px solid rgba(107, 207, 126, 0.2);
+  color: $successColor;
+  padding: 12px 16px;
+  border-radius: $borderRadiusMedium;
+  font-weight: 500;
+}
+
+// === 警告状态样式 ===
+.love-warning {
+  background: linear-gradient(135deg, rgba(255, 185, 70, 0.1) 0%, rgba(255, 167, 38, 0.1) 100%);
+  border: 1px solid rgba(255, 185, 70, 0.2);
+  color: $warningColor;
+  padding: 12px 16px;
+  border-radius: $borderRadiusMedium;
+  font-weight: 500;
+}
+
+// === 错误状态样式 ===
+.love-error {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(255, 82, 82, 0.1) 100%);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  color: $errorColor;
+  padding: 12px 16px;
+  border-radius: $borderRadiusMedium;
+  font-weight: 500;
+}
+
+// === 信息状态样式 ===
+.love-info {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  color: #667eea;
+  padding: 12px 16px;
+  border-radius: $borderRadiusMedium;
+  font-weight: 500;
+}
+
+// === 浮动按钮样式 ===
+.love-float-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 56px;
+  height: 56px;
+  background: $gradientPrimary;
+  border-radius: 50%;
+  box-shadow: $shadowHeavy;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 40px rgba(255, 107, 157, 0.4);
+  }
+}
+
+// === 文本对齐工具类 ===
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+// === 间距工具类 ===
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mt-4 { margin-top: 32px; }
+
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+.mb-4 { margin-bottom: 32px; }
+
+.p-1 { padding: 8px; }
+.p-2 { padding: 16px; }
+.p-3 { padding: 24px; }
+.p-4 { padding: 32px; }
+
+// === 隐藏工具类 ===
+.hidden { display: none !important; }
+.invisible { visibility: hidden !important; }
+
+// === 响应式隐藏 ===
+@media (max-width: 768px) {
+  .hidden-mobile { display: none !important; }
+}
+
+@media (min-width: 769px) {
+  .hidden-desktop { display: none !important; }
+}
+
+// === 打印样式 ===
+@media print {
+  .no-print { display: none !important; }
+}
+
+#app {
+  height: 100%;
+}
+
+label {
+  font-weight: 700;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+.app-main {
+  min-height: 100%;
+}
+
+.app-container {
+  padding: 0px 20px 20px 20px;
+}
+
+.filter-container {
+  padding-bottom: 10px;
+
+  .filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+  }
+}
+
+.page-container {
+  float: right;
+  margin: 20px;
+}
+
+.page-title {
+  color: #ccc;
+  border-bottom: 1px dashed #ccc;
+  padding: 10px;
+}
