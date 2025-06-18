@@ -1,28 +1,26 @@
-import Layout from '@/layout'
-
+import Layout from '@/layout/index.vue'
 
 const topicRouter = {
-    path: '/topic',
-    component: Layout,
-    name: 'topic',
-    redirect: '/topic/list',
-    meta: {title: '话题管理', icon: 'table'},
-    alwaysShow: true,
-    children: [
-        {
-            path: 'list',
-            name: 'topic-list',
-            component: () => import('@/views/topic/index'),
-            meta: {title: '话题列表', icon: 'list'}
-        },
-        {
-            path: 'add',
-            name: 'topic-list',
-            hidden: true,
-            component: () => import('@/views/topic/add'),
-            meta: { title: '添加话题', icon: 'table' }
-        },
-    ]
+  path: '/topic',
+  component: Layout,
+  name: 'topic',
+  redirect: '/topic',
+  meta: { title: '话题管理', icon: 'ChatDotRound' },
+  alwaysShow: true,
+  children: [
+    {
+      path: 'topic',
+      name: 'topic-list',
+      component: () => import('@/views/topic/index.vue'),
+      meta: { title: '话题列表', icon: 'List' },
+    },
+    {
+      path: 'add',
+      name: 'topic-add',
+      component: () => import('@/views/topic/add.vue'),
+      meta: { title: '添加话题', icon: 'Plus' },
+    },
+  ],
 }
 
 export default topicRouter

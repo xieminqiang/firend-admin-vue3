@@ -1,0 +1,360 @@
+
+
+  VITE v5.4.19  ready in 327 ms
+
+  ➜  Local:   http://localhost:9528/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+Deprecation Warning [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+1 │ @import "@/styles/variables.scss";@import './variables.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/styles/index.scss 1:9  root stylesheet
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+1 │ @import "@/styles/variables.scss";@import './variables.scss';
+  │                                           ^^^^^^^^^^^^^^^^^^
+  ╵
+    src/styles/index.scss 1:43  root stylesheet
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+2 │ @import './mixin.scss';
+  │         ^^^^^^^^^^^^^^
+  ╵
+    src/styles/index.scss 2:9  root stylesheet
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+3 │ @import './transition.scss';
+  │         ^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/styles/index.scss 3:9  root stylesheet
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+4 │ @import './element-ui.scss';
+  │         ^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/styles/index.scss 4:9  root stylesheet
+
+Warning: 1 repetitive deprecation warnings omitted.
+
+Deprecation Warning [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+1 │ @import "@/styles/variables.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/index.vue 1:9  root stylesheet
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+2 │ @import '~@/styles/mixin.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/index.vue 2:9  root stylesheet
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+3 │ @import '~@/styles/variables.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/index.vue 3:9  root stylesheet
+
+18:03:21 [vite] Pre-transform error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file e
+18:03:21 [vite] Pre-transform error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file exist?
+18:03:21 [vite] Pre-transform error: [sass] Can't find stylesheet to import.
+  ╷
+2 │ @import '~@/styles/mixin.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src/layout/index.vue 2:9  root stylesheet
+18:03:21 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". D
+18:03:21 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". Does the file exist?
+Deprecation Warning [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+1 │ @import "@/styles/variables.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/components/TagsView/index.vue 1:9  root stylesheet
+
+Deprecation Warning [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+1 │ @import "@/styles/variables.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/components/TagsView/index.vue 1:9  root stylesheet
+
+Deprecation Warning [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+1 │ @import "@/styles/variables.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/index.vue 1:9  root stylesheet
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+2 │ @import '~@/styles/mixin.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/index.vue 2:9  root stylesheet
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+3 │ @import '~@/styles/variables.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/index.vue 3:9  root stylesheet
+
+18:03:21 [vite] Internal server error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file
+18:03:21 [vite] Internal server error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/xiaoqiang/Documents/friemd/love_universe_admin-main/src/layout/components/index.js:1:36
+  1  |  export { default as Navbar } from './Navbar'
+     |                                     ^
+  2  |  export { default as Sidebar } from './Sidebar'
+  3  |  export { default as AppMain } from './AppMain'
+      at TransformPluginContext._formatError (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vi
+      at TransformPluginContext._formatError (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49258:41)
+      at TransformPluginContext.error (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist
+      at TransformPluginContext.error (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49253:16)
+      at normalizeUrl (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep
+      at normalizeUrl (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64291:23)
+      at async file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX
+      at async file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64423:39
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules
+      at async TransformPluginContext.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64350:7)
+      at async PluginContainer.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/d
+      at async PluginContainer.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49099:18)
+      at async loadAndTransform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/
+      at async loadAndTransform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:51977:27)
+      at async viteTransformMiddleware (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dis
+      at async viteTransformMiddleware (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:62105:24)
+18:03:21 [vite] Internal server error: [sass] Can't find stylesheet to import.
+  ╷
+2 │ @import '~@/styles/mixin.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src/layout/index.vue 2:9  root stylesheet
+  Plugin: vite:css
+  File: /Users/xiaoqiang/Documents/friemd/love_universe_admin-main/src/layout/index.vue:63:9
+  Error: Can't find stylesheet to import.
+    ╷
+  2 │ @import '~@/styles/mixin.scss';
+    │         ^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    src/layout/index.vue 2:9  root stylesheet
+      at Object.wrapException (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:2302:4
+      at Object.wrapException (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:2302:47)
+      at /Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:87480:25
+      at _wrapJsFunctionForAsync_closure.$protected (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sa
+      at _wrapJsFunctionForAsync_closure.$protected (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:4921:15)
+      at _wrapJsFunctionForAsync_closure.call$2 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/s
+      at _wrapJsFunctionForAsync_closure.call$2 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:38012:12)
+      at _awaitOnObject_closure.call$1 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.
+      at _awaitOnObject_closure.call$1 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:38000:32)
+      at Object._rootRunUnary (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:5339:1
+      at Object._rootRunUnary (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:5339:18)
+      at StaticClosure.<anonymous> (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:1
+      at StaticClosure.<anonymous> (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:124453:16)
+      at _CustomZone.runUnary$2$2 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:39
+      at _CustomZone.runUnary$2$2 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:39444:39)
+      at _Future__propagateToListeners_handleValueCallback.call$0 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/n
+      at _Future__propagateToListeners_handleValueCallback.call$0 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:38502:51)
+      at Object._Future__propagateToListeners (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sas
+      at Object._Future__propagateToListeners (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:5131:93)
+      at _Future._completeWithValue$1 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.j
+      at _Future._completeWithValue$1 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:38365:9)
+      at _AsyncAwaitCompleter.complete$1 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dar
+      at _AsyncAwaitCompleter.complete$1 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:37987:14)
+      at Object._asyncReturn (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:4893:17
+      at Object._asyncReturn (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:4893:17)
+      at /Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:87575:24
+      at _wrapJsFunctionForAsync_closure.$protected (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sa
+      at _wrapJsFunctionForAsync_closure.$protected (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:4921:15)
+      at _wrapJsFunctionForAsync_closure.call$2 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/s
+      at _wrapJsFunctionForAsync_closure.call$2 (/Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/sass/sass.dart.js:38012:12)
+18:03:21 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". D
+18:03:21 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". Does the file exist?
+18:04:22 [vite] hmr update /src/layout/index.vue
+Deprecation Warning [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+1 │ @import "@/styles/variables.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/index.vue 1:9  root stylesheet
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+2 │ @import '@/styles/mixin.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/index.vue 2:9  root stylesheet
+
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+  ╷
+3 │ @import '@/styles/variables.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+    src/layout/index.vue 3:9  root stylesheet
+
+18:04:22 [vite] Pre-transform error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file e
+18:04:22 [vite] Pre-transform error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file exist?
+18:04:22 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". D
+18:04:22 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". Does the file exist?
+18:04:22 [vite] Internal server error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file
+18:04:22 [vite] Internal server error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/xiaoqiang/Documents/friemd/love_universe_admin-main/src/layout/components/index.js:1:36
+  1  |  export { default as Navbar } from './Navbar'
+     |                                     ^
+  2  |  export { default as Sidebar } from './Sidebar'
+  3  |  export { default as AppMain } from './AppMain'
+      at TransformPluginContext._formatError (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vi
+      at TransformPluginContext._formatError (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49258:41)
+      at TransformPluginContext.error (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist
+      at TransformPluginContext.error (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49253:16)
+      at normalizeUrl (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep
+      at normalizeUrl (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64291:23)
+      at async file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX
+      at async file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64423:39
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules
+      at async TransformPluginContext.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64350:7)
+      at async PluginContainer.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/d
+      at async PluginContainer.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49099:18)
+      at async loadAndTransform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/
+      at async loadAndTransform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:51977:27)
+      at async viteTransformMiddleware (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dis
+      at async viteTransformMiddleware (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:62105:24)
+18:04:22 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". D
+18:04:22 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". Does the file exist?
+18:04:32 [vite] Internal server error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file
+18:04:32 [vite] Internal server error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/xiaoqiang/Documents/friemd/love_universe_admin-main/src/layout/components/index.js:1:36
+  1  |  export { default as Navbar } from './Navbar'
+     |                                     ^
+  2  |  export { default as Sidebar } from './Sidebar'
+  3  |  export { default as AppMain } from './AppMain'
+      at TransformPluginContext._formatError (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vi
+      at TransformPluginContext._formatError (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49258:41)
+      at TransformPluginContext.error (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist
+      at TransformPluginContext.error (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49253:16)
+      at normalizeUrl (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep
+      at normalizeUrl (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64291:23)
+      at async file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX
+      at async file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64423:39
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules
+      at async TransformPluginContext.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64350:7)
+      at async PluginContainer.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/d
+      at async PluginContainer.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49099:18)
+      at async loadAndTransform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/
+      at async loadAndTransform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:51977:27)
+      at async viteTransformMiddleware (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dis
+      at async viteTransformMiddleware (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:62105:24)
+18:04:32 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". D
+18:04:32 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". Does the file exist?
+18:04:32 [vite] Internal server error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file
+18:04:32 [vite] Internal server error: Failed to resolve import "./Navbar" from "src/layout/components/index.js". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/xiaoqiang/Documents/friemd/love_universe_admin-main/src/layout/components/index.js:1:36
+  1  |  export { default as Navbar } from './Navbar'
+     |                                     ^
+  2  |  export { default as Sidebar } from './Sidebar'
+  3  |  export { default as AppMain } from './AppMain'
+      at TransformPluginContext._formatError (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vi
+      at TransformPluginContext._formatError (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49258:41)
+      at TransformPluginContext.error (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist
+      at TransformPluginContext.error (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49253:16)
+      at normalizeUrl (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep
+      at normalizeUrl (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64291:23)
+      at async file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX
+      at async file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64423:39
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules
+      at async TransformPluginContext.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:64350:7)
+      at async PluginContainer.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/d
+      at async PluginContainer.transform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:49099:18)
+      at async loadAndTransform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/
+      at async loadAndTransform (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:51977:27)
+      at async viteTransformMiddleware (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dis
+      at async viteTransformMiddleware (file:///Users/xiaoqiang/Documents/friemd/love_universe_admin-main/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:62105:24)
+18:04:32 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". D
+18:04:32 [vite] Pre-transform error: Failed to resolve import "./ScrollPane" from "src/layout/components/TagsView/index.vue". Does the file exist?

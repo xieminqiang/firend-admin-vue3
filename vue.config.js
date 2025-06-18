@@ -44,7 +44,7 @@ module.exports = {
         },
         proxy: {
             '/api': {
-                target: 'https://www.aipointer.com/love/admin',
+                target: 'http://127.0.0.1:9901/love/admin',
                 // target: 'http://0.0.0.0:9901/love/admin',
                 changeOrigin: true,
                 ws: true,
@@ -63,12 +63,23 @@ module.exports = {
             alias: {
                 '@': resolve('src')
             },
-            // webpack 5 polyfill 配置
-            fallback: {
-                "path": require.resolve("path-browserify"),
-                "os": require.resolve("os-browserify/browser"),
-                "crypto": false
-            }
+            // webpack 5 polyfill 配置 - 条件引用
+            fallback: (() => {
+                try {
+                    return {
+                        "path": require.resolve("path-browserify"),
+                        "os": require.resolve("os-browserify/browser"),
+                        "crypto": false
+                    }
+                } catch (e) {
+                    // 如果polyfill包不存在，使用默认配置
+                    return {
+                        "path": false,
+                        "os": false,
+                        "crypto": false
+                    }
+                }
+            })()
         },
         // Node.js v18+ 优化配置
         optimization: {
@@ -128,6 +139,10 @@ module.exports = {
             .use('vue-loader')
             .loader('vue-loader')
             .tap(options => {
+                // Vue3 兼容性配置
+                if (!options.compilerOptions) {
+                    options.compilerOptions = {}
+                }
                 options.compilerOptions.preserveWhitespace = true
                 return options
             })

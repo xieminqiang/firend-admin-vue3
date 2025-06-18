@@ -10,7 +10,7 @@
 ## 🌟 项目特色
 
 - **💖 精美设计**：浪漫粉紫渐变主题，现代化 UI 设计
-- **🚀 高性能**：支持 Node.js v18+，向下兼容 v12+
+- **🚀 高性能**：支持 Node.js v18+
 - **📱 响应式**：完美适配桌面端和移动端
 - **🎨 动画丰富**：流畅的过渡动画和交互效果
 - **🔧 易扩展**：模块化设计，易于定制和扩展
@@ -193,11 +193,37 @@ configureWebpack: {
 
 ### 常见问题
 
-#### 1. 菜单选中颜色问题
-**问题**：升级后菜单选中颜色变化  
-**解决**：已在 `sidebar.scss` 中重新定义选中样式
+#### 1. Sass弃用警告修复 ✅
+**问题**：Dart Sass 1.69.5+ 弃用 `@import` 语法警告  
+**原因**：
+- 新版本Sass不推荐使用 `@import` 语法
+- Vite项目中环境变量访问方式变化
+- Vue3项目中模块导入语法更新
 
-#### 2. 角色管理编辑功能错误
+**解决方案**：
+- ✅ 将所有 `@import` 替换为 `@use` 语法
+- ✅ 在每个使用变量的SCSS文件顶部添加 `@use './variables.scss' as *;`
+- ✅ 更新Vite配置使用现代Sass API: `api: 'modern-compiler'`
+- ✅ 修复环境变量访问：`process.env` → `import.meta.env`
+- ✅ 修复模块导出：`module.exports` → `export default`
+
+#### 2. Vue3兼容性修复 ✅
+**问题**：Vue2到Vue3的语法和API变化  
+**解决方案**：
+- ✅ 权限指令适配Vue3：`Vue.directive` → `app.directive`
+- ✅ 路由API更新：`addRoutes` → `addRoute`
+- ✅ 状态管理迁移：Vuex → Pinia
+- ✅ 组件语法更新：Options API → Composition API
+- ✅ 环境变量更新：`process.env.VUE_APP_*` → `import.meta.env.VITE_*`
+
+#### 3. 组件注册修复 ✅
+**问题**：SvgIcon组件未注册导致登录页面显示异常  
+**解决方案**：
+- ✅ 在main.js中全局注册SvgIcon组件
+- ✅ 删除旧的Vue2风格的icons配置文件
+- ✅ 使用vite-plugin-svg-icons插件处理SVG图标
+
+#### 4. 角色管理编辑功能错误
 **问题**：点击编辑按钮时出现 "TypeError: Cannot set properties of undefined (setting 'true')" 错误  
 **原因**：
 - API 返回数据结构不一致时，解构赋值失败
@@ -210,25 +236,34 @@ configureWebpack: {
 - 优化 `removeEmptyChildren` 函数，增加数据类型验证
 - 改进数组解构赋值为单独的属性赋值，提高代码可读性和错误定位能力
 
-#### 3. 编译错误
+#### 5. 编译错误
 **问题**：Node.js v18 核心模块解析错误  
 **解决**：已配置 webpack fallback 和 polyfill
 
-#### 4. 样式冲突
+#### 6. 样式冲突
 **问题**：Element UI 样式覆盖  
 **解决**：使用 `!important` 和更高优先级选择器
+
+### 修复后的技术栈
+- **前端框架**：Vue 3.4.0
+- **UI组件库**：Element Plus 2.4.4
+- **状态管理**：Pinia 2.1.7
+- **路由管理**：Vue Router 4.2.5
+- **构建工具**：Vite 5.0.10
+- **样式处理**：Sass 1.69.5 (现代API)
+- **开发工具**：ESLint 8.55.0 + Prettier 3.1.1
 
 ### 开发调试
 
 ```bash
 # 查看详细编译信息
-npm run serve -- --verbose
+npm run dev
 
 # 分析打包文件大小
-npm run build -- --report
+npm run build
 
 # 检查代码质量
-npm run lint -- --fix
+npm run lint
 ```
 
 ## 📈 性能优化

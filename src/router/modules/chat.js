@@ -1,34 +1,34 @@
-import Layout from '@/layout'
+import * as Vue from 'vue'
+import Layout from '@/layout/index.vue'
 
 const chatRouter = {
-    path: '/chat',
-    component: Layout,
-    name: 'chat',
-    redirect: '/chat/list',
-    meta: { title: '聊天管理', icon: 'example' },
-    alwaysShow: true,
-    children: [
-        {
-            path: 'list',
-            name: 'chat-list',
-            component: () => import('@/views/chat/index'),
-            meta: { title: '聊天', icon: 'table' }
-        },
-        {
-            path: 'manage',
-            name: 'chat-manage',
-            component: () => import('@/views/chat/manage'),
-            meta: { title: '聊天管理', icon: 'table' }
-        },
-        {
-            path: 'add',
-            name: 'chat-add',
-            hidden: true,
-            component: () => import('@/views/chat/add'),
-            meta: { title: '聊天添加', icon: 'table' }
-        },
-    ]
+  path: '/chat',
+  component: Layout,
+  name: 'chat',
+  redirect: '/chat',
+  meta: { title: '聊天管理', icon: 'Message' },
+  alwaysShow: true,
+  children: [
+    {
+      path: 'chat',
+      name: 'chat-list',
+      component: () => import('@/views/chat/index.vue'),
+      meta: { title: '聊天列表', icon: 'ChatRound' },
+    },
+    {
+      path: 'manage',
+      name: 'chat-manage',
+      component: () => import('@/views/chat/manage.vue'),
+      meta: { title: '聊天管理', icon: 'Setting' },
+    },
+    {
+      path: 'add',
+      name: 'chat-add',
+      hidden: true,
+      component: Vue.defineAsyncComponent(() => import('@/views/chat/add.vue')),
+      meta: { title: '聊天添加', icon: 'table' },
+    },
+  ],
 }
-
 
 export default chatRouter

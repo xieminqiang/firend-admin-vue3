@@ -1,16 +1,13 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import adminUser from './modules/user'
 import order from './modules/order'
-import topic from "./modules/topic"
+import topic from './modules/topic'
 import system from './modules/system'
 import chat from './modules/chat'
 import service from './modules/service'
 
-Vue.use(Router)
-
 /* Layout */
-import Layout from '@/layout'
+import Layout from '@/layout/index.vue'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -35,64 +32,78 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
-    {
-        path: '/login',
-        component: () => import('@/views/login/index'),
-        hidden: true
-    },
+  {
+    path: '/login',
+    component: () => import('@/views/login/index.vue'),
+    hidden: true,
+  },
 
-    {
-        path: '/404',
-        component: () => import('@/views/404'),
-        hidden: true
-    },
+  {
+    path: '/404',
+    component: () => import('@/views/404.vue'),
+    hidden: true,
+  },
 
-    {
-        path: '/',
-        component: Layout,
-        redirect: '/dashboard',
-        children: [{
-            path: 'dashboard',
-            name: 'Dashboard',
-            component: () => import('@/views/dashboard/index'),
-            meta: { title: '首页', icon: 'dashboard' }
-        }]
-    },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index.vue'),
+        meta: { title: '首页', icon: 'HomeFilled' },
+      },
+    ],
+  },
 
-    {
-        path: 'external-link',
-        component: Layout,
-        hidden: true,
-        children: [
-            {
-                path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-                meta: { title: 'External Link', icon: 'link' }
-            }
-        ]
-    }
+  {
+    path: '/external-link',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/external-link/vue-element-admin',
+        name: 'ExternalLink',
+        component: () => import('@/views/redirect/index.vue'),
+        meta: { 
+          title: 'External Link', 
+          icon: 'link',
+          externalLink: 'https://panjiachen.github.io/vue-element-admin-site/#/'
+        },
+      },
+    ],
+  },
 ]
 
-export const asyncRoutes = [
-    adminUser,
-    order,
-    topic,
-    system,
-    chat,
-    service
-]
+export const asyncRoutes = [adminUser, order, topic, system, chat, service]
 
-const createRouter = () => new Router({
-    // mode: 'history', // require service support
-    scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
-})
+const createRouterInstance = () =>
+  createRouter({
+    history: createWebHistory(),
+    routes: constantRoutes,
+    scrollBehavior: () => ({
+      left: 0,
+      top: 0,
+    }),
+  })
 
-const router = createRouter()
+const router = createRouterInstance()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-    const newRouter = createRouter()
-    router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouterInstance()
+  // 清除所有动态路由
+  asyncRoutes.forEach(route => {
+    if (route.name) {
+      router.removeRoute(route.name)
+    }
+  })
+  // 重新添加基础路由
+  constantRoutes.forEach(route => {
+    router.addRoute(route)
+  })
 }
 
 export default router

@@ -5,11 +5,11 @@ import request from '@/utils/request'
  * @param {Object} params - 查询参数
  */
 export function getServiceList(params) {
-    return request({
-        url: '/service/list',
-        method: 'get',
-        params
-    })
+  return request({
+    url: '/service/list',
+    method: 'get',
+    params,
+  })
 }
 
 /**
@@ -17,10 +17,10 @@ export function getServiceList(params) {
  * @param {string|number} id - 服务ID
  */
 export function getServiceDetail(id) {
-    return request({
-        url: `/service/detail/${id}`,
-        method: 'get'
-    })
+  return request({
+    url: `/service/detail/${id}`,
+    method: 'get',
+  })
 }
 
 /**
@@ -28,11 +28,11 @@ export function getServiceDetail(id) {
  * @param {Object} data - 服务数据
  */
 export function addService(data) {
-    return request({
-        url: '/service/add',
-        method: 'post',
-        data
-    })
+  return request({
+    url: '/service/add',
+    method: 'post',
+    data,
+  })
 }
 
 /**
@@ -41,11 +41,11 @@ export function addService(data) {
  * @param {Object} data - 服务数据
  */
 export function editService(id, data) {
-    return request({
-        url: `/service/edit/${id}`,
-        method: 'put',
-        data
-    })
+  return request({
+    url: `/service/edit/${id}`,
+    method: 'put',
+    data,
+  })
 }
 
 /**
@@ -53,18 +53,18 @@ export function editService(id, data) {
  * @param {string|number} id - 服务ID
  */
 export function deleteService(id) {
-    return request({
-        url: `/service/delete/${id}`,
-        method: 'delete'
-    })
+  return request({
+    url: `/service/delete/${id}`,
+    method: 'delete',
+  })
 }
 
 /**
  * 获取服务分类列表
  */
 export function getServiceCategories() {
-    return request({
-        url: '/service/categories',
-        method: 'get'
-    })
-} 
+  return request({
+    url: '/service/categories',
+    method: 'get',
+  })
+}

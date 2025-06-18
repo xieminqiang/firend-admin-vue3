@@ -1,3 +1,5 @@
+@use './variables.scss' as *;
+
 #app {
 
   .main-container {
@@ -23,17 +25,7 @@
     overflow: hidden;
     box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
 
-    // 侧边栏渐变背景
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(145deg, #1e2139 0%, #2a2d5a 100%);
-      z-index: -1;
-    }
+
 
     // reset element-ui css
     .horizontal-collapse-transition {
@@ -102,7 +94,7 @@
       font-weight: 500;
       letter-spacing: 0.5px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      
+  
       &::before {
         content: '';
         position: absolute;
@@ -147,7 +139,7 @@
       margin: 4px 12px;
       border-radius: $borderRadiusMedium;
       overflow: hidden;
-      
+      background: red;
       .el-submenu__title {
         color: $menuText;
         font-weight: 500;
@@ -227,29 +219,14 @@
         display: none !important;
       }
 
-      .el-tooltip {
-        padding: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-
-        .svg-icon {
-          margin: 0 !important;
-          font-size: 18px !important; // 统一图标大小
-        }
-      }
-      
-      // 直接包含svg-icon的情况
-      .svg-icon {
+      .menu-icon {
         margin: 0 !important;
         font-size: 18px !important; // 统一图标大小
       }
 
       // 收缩状态下的悬停效果优化
       &:hover {
-        .svg-icon {
+        .menu-icon {
           transform: scale(1.2) !important;
           color: $primaryColor !important;
         }
@@ -267,7 +244,7 @@
         justify-content: center !important;
         height: 48px !important; // 确保统一高度
 
-        .svg-icon {
+        .menu-icon {
           margin: 0 !important;
           font-size: 18px !important; // 统一图标大小
         }
@@ -278,7 +255,7 @@
 
         // 收缩状态下的悬停效果优化
         &:hover {
-          .svg-icon {
+          .menu-icon {
             transform: scale(1.2) !important;
             color: $primaryColor !important;
           }
@@ -290,11 +267,11 @@
       .el-submenu {
         &>.el-submenu__title {
           &>span {
-            height: 0;
-            width: 0;
-            overflow: hidden;
-            visibility: hidden;
-            display: inline-block;
+            height: auto !important;
+            width: auto !important;
+            overflow: visible !important;
+            visibility: visible !important;
+            display: inline-block !important;
           }
         }
       }
@@ -345,26 +322,32 @@
   .nest-menu .el-submenu>.el-submenu__title,
   .el-menu-item {
     &:hover {
-      // you can use $subMenuHover
       background-color: $menuHover !important;
     }
   }
 
-  // the scroll bar appears when the subMenu is too long
+  // 弹出菜单样式优化
   >.el-menu--popup {
     max-height: 100vh;
     overflow-y: auto;
     background: rgba(30, 33, 57, 0.95);
     backdrop-filter: blur(10px);
-    border-radius: $borderRadiusMedium;
+    border-radius: $borderRadiusSmall;
     box-shadow: $shadowHeavy;
     color: white !important;
+    padding: 8px 0;
     
     .el-menu-item {
       color: white !important;
+      padding: 0 20px !important;
+      height: 40px !important;
+      line-height: 40px !important;
+      margin: 4px 8px !important;
+      border-radius: $borderRadiusSmall !important;
       
       &:hover {
         color: $menuActiveText !important;
+        background: rgba(255, 255, 255, 0.1) !important;
       }
       
       &.is-active {
@@ -375,43 +358,86 @@
     
     .el-submenu__title {
       color: white !important;
+      padding: 0 20px !important;
+      height: 40px !important;
+      line-height: 40px !important;
+      margin: 4px 8px !important;
+      border-radius: $borderRadiusSmall !important;
       
       &:hover {
         color: $menuActiveText !important;
+        background: rgba(255, 255, 255, 0.1) !important;
       }
     }
     
     .el-submenu.is-active .el-submenu__title {
       color: $menuActiveText !important;
     }
+  }
+}
+
+// 修复收缩状态下的弹出菜单样式
+.el-menu--popup {
+  background: rgba(30, 33, 57, 0.95) !important;
+  border: none !important;
+  padding: 8px 0 !important;
+  border-radius: $borderRadiusSmall !important;
+  box-shadow: $shadowHeavy !important;
+  box-sizing: border-box !important;
+  .el-menu-item,
+  .el-sub-menu__title {
+    span {
+      display: inline-block !important;
+      visibility: visible !important;
+      width: auto !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+  }
+
+  .el-menu-item {
+    color: white !important;
+    padding: 0 20px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    margin: 4px 8px !important;
+    border-radius: $borderRadiusSmall !important;
+    
+    &:hover {
+      color: $menuActiveText !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    &.is-active {
+      color: $menuActiveText !important;
+      background: rgba(255, 107, 157, 0.15) !important;
+    }
+  }
   
-    &::-webkit-scrollbar-track-piece {
-      background: rgba(255, 107, 157, 0.1);
+  .el-sub-menu__title {
+    color: white !important;
+    padding: 0 20px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    margin: 4px 8px !important;
+    border-radius: $borderRadiusSmall !important;
+    
+    &:hover {
+      color: $menuActiveText !important;
+      background: rgba(255, 255, 255, 0.1) !important;
     }
-
-    &::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: rgba(255, 107, 157, 0.5);
-      border-radius: 4px;
-    }
+  }
+  
+  .el-submenu.is-active .el-submenu__title {
+    color: $menuActiveText !important;
   }
 }
 
-// 🎨 收缩状态下覆盖 el-menu--vertical 的图标样式
-.hideSidebar .el-menu--vertical {
-  &>.el-menu {
-    .svg-icon {
-      margin-right: 0 !important;
-      margin-left: 0 !important;
-    }
-  }
-}
+
 
 // 🎨 修复收缩状态下的提示框样式
 .el-tooltip__popper {
+
   &.is-dark {
     background: linear-gradient(135deg, #1e2139 0%, #2a2d5a 100%) !important;
     color: $menuText !important;

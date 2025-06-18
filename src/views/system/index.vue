@@ -1,18 +1,11 @@
 <template>
-    <div>
-        <p>
-            开发中....
-        </p>
-    </div>
-
+  <div>
+    <p>开发中....</p>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'index'
+  name: 'index',
 }
 </script>
-
-<style scoped>
-
-</style>

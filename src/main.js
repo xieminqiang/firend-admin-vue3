@@ -1,53 +1,69 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import '@/styles/index.scss' // global css
 
-import App from './App'
-import store from './store'
+import App from './App.vue'
+import pinia from './store' // 引入Pinia状态管理
 import router from './router'
 
-import '@/icons' // icon
+// 导入组件
+import SvgIcon from '@/components/SvgIcon/index.vue'
+
+import 'virtual:svg-icons-register' // Vite SVG图标插件
 import '@/permission' // permission control
 import permission from '@/directive/permission/index'
-import TencentCloudChat from '@tencentcloud/chat';
-import TIMUploadPlugin from 'tim-upload-plugin';
-import TIMProfanityFilterPlugin from 'tim-profanity-filter-plugin';
-import VueContextMenu from '@xunlei/vue-context-menu'
+import TencentCloudChat from '@tencentcloud/chat'
+import TIMUploadPlugin from 'tim-upload-plugin'
+import TIMProfanityFilterPlugin from 'tim-profanity-filter-plugin'
 
-import echarts from "./echars/index"; // npm install echarts --save 
+import echarts from './echars/index' // npm install echarts --save
 
 let options = {
-  SDKAppID: 1400823559 // 接入时需要将0替换为您的即时通信 IM 应用的 SDKAppID
-};
+  SDKAppID: 1400823559, // 接入时需要将0替换为您的即时通信 IM 应用的 SDKAppID
+}
 // 创建 SDK 实例，`TIM.create()`方法对于同一个 `SDKAppID` 只会返回同一份实例
-let chat = TencentCloudChat.create(options); // SDK 实例通常用 chat 表示
+let chat = TencentCloudChat.create(options) // SDK 实例通常用 chat 表示
 
-console.log("NODE_ENV:",process.env.NODE_ENV)
-if(process.env.NODE_ENV === "development" ){
-  chat.setLogLevel(0); // 普通级别，日志量较多，接入时建议使用
-}else {
-  chat.setLogLevel(1); // release 级别，SDK 输出关键信息，生产环境时建议使用
+console.log('NODE_ENV:', import.meta.env.MODE)
+if (import.meta.env.MODE === 'development') {
+  chat.setLogLevel(0) // 普通级别，日志量较多，接入时建议使用
+} else {
+  chat.setLogLevel(1) // release 级别，SDK 输出关键信息，生产环境时建议使用
 }
 // 注册腾讯云即时通信 IM 上传插件
-chat.registerPlugin({'tim-upload-plugin': TIMUploadPlugin});
+chat.registerPlugin({ 'tim-upload-plugin': TIMUploadPlugin })
 // 注册腾讯云即时通信 IM 本地审核插件
-chat.registerPlugin({'tim-profanity-filter-plugin': TIMProfanityFilterPlugin});
-Vue.prototype.Tim = chat
-Vue.prototype.$echarts = echarts;
-Vue.use(ElementUI)
-Vue.use(permission)
-Vue.config.productionTip = false
-permission.install(Vue)
-Vue.use(VueContextMenu)
+chat.registerPlugin({ 'tim-profanity-filter-plugin': TIMProfanityFilterPlugin })
 
-new Vue({
-    el: '#app',
-    router,
-    store,
-    render: h => h(App)
-})
+// 创建Vue3应用实例
+const app = createApp(App)
+
+// 全局属性配置
+app.config.globalProperties.Tim = chat
+app.config.globalProperties.$echarts = echarts
+app.config.globalProperties.routerAppend = (path, pathToAppend) => {
+  return path + (path.endsWith('/') ? '' : '/') + pathToAppend
+}
+
+// 注册Element Plus图标
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
+
+// 注册全局组件
+app.component('SvgIcon', SvgIcon)
+
+// 注册插件
+app.use(ElementPlus)
+app.use(permission)
+app.use(pinia) // 使用Pinia状态管理
+app.use(router)
+
+// 挂载应用
+app.mount('#app')

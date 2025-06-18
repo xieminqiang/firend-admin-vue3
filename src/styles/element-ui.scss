@@ -1,3 +1,5 @@
+@use './variables.scss' as *;
+
 // cover some element-ui styles
 
 .el-breadcrumb__inner,
@@ -155,14 +157,19 @@
   .el-table__header-wrapper {
     .el-table__header {
       th {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        font-weight: 600;
-        padding: 15px 0;
-        border-bottom: none;
-        
-        .cell {
-          color: white;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+        color: #495057 !important;
+        font-weight: 600 !important;
+        border-bottom: 2px solid #dee2e6 !important;
+        padding: 12px 0 !important;
+        transition: all 0.3s ease !important;
+
+        &:hover {
+          background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%) !important;
+        }
+
+        &.is-leaf {
+          border-bottom: 2px solid #dee2e6 !important;
         }
       }
     }
@@ -178,10 +185,20 @@
         }
         
         td {
-          padding: 15px 0;
-          border-bottom: 1px solid #f1f5f9;
+          padding: 12px 0 !important;
+          border-bottom: 1px solid #e9ecef !important;
         }
       }
+    }
+  }
+
+  // 表格边框样式
+  &.el-table--border {
+    border: 1px solid #dee2e6 !important;
+    
+    &::after,
+    &::before {
+      background-color: #dee2e6 !important;
     }
   }
 }
@@ -406,6 +423,26 @@
           background: $successColor;
           border-color: $successColor;
         }
+      }
+    }
+  }
+}
+
+// 表格hover效果
+.el-table__row {
+  &:hover {
+    td {
+      background-color: #f8f9fa !important;
+    }
+  }
+}
+
+// 表格斑马纹样式
+.el-table--striped {
+  .el-table__body {
+    tr.el-table__row--striped {
+      td {
+        background: #f8f9fa !important;
       }
     }
   }

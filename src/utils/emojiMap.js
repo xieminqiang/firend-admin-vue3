@@ -141,7 +141,7 @@ export const emojiMap = {
   '[麦克风]': 'emoji_138@2x.png',
   '[麻将]': 'emoji_139@2x.png',
   '[鼓掌]': 'emoji_140@2x.png',
-  '[龇牙]': 'emoji_141@2x.png'
+  '[龇牙]': 'emoji_141@2x.png',
 }
 export const emojiName = [
   '[龇牙]',
@@ -281,5 +281,5 @@ export const emojiName = [
   '[沙发]',
   '[纸巾]',
   '[手枪]',
-  '[青蛙]'
+  '[青蛙]',
 ]
