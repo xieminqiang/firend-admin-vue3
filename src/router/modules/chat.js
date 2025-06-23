@@ -5,7 +5,7 @@ const chatRouter = {
   path: '/chat',
   component: Layout,
   name: 'chat',
-  redirect: '/chat',
+  redirect: '/chat/chat',
   meta: { title: '聊天管理', icon: 'Message' },
   alwaysShow: true,
   children: [

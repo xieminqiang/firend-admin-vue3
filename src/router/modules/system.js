@@ -4,7 +4,7 @@ const systemRouter = {
   path: '/system',
   component: Layout,
   name: 'system',
-  redirect: '/system',
+  redirect: '/system/config',
   meta: { title: '系统管理', icon: 'system' },
   alwaysShow: true,
   children: [

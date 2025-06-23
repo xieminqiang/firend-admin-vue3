@@ -1,5 +1,5 @@
 export default {
-  title: '💕 伴集管理后台',
+  title: '💕 随伴行管理后台',
 
   /**
    * @type {boolean} true | false
@@ -53,5 +53,11 @@ export default {
    * @type {string}
    * @description Copyright information
    */
-  copyright: '© 2024 伴集 Admin. Made with 💖',
+  copyright: '© 2024 随伴行 Admin. Made with 💖',
+
+  /**
+   * @type {string}
+   * @description OSS图片资源域名
+   */
+  ossBaseUrl: 'https://sygx-server-bucket-admin.oss-cn-shanghai.aliyuncs.com',
 }

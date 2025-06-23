@@ -1,266 +1,552 @@
 <template>
   <div class="app-container">
+    <!-- 页面头部 -->
     <div class="page-header">
-      <el-button :icon="ElIconArrowLeft" @click="handleBack">返回</el-button>
-      <span class="page-title">服务详情</span>
+      <el-button @click="handleBack" :icon="ElIconArrowLeft">返回列表</el-button>
+      <h2 class="page-title">服务详情</h2>
+      <div class="header-actions">
+        <el-button type="primary" @click="handleEdit" :icon="ElIconEdit">编辑</el-button>
+      </div>
     </div>
 
-    <el-card v-loading="loading">
-      <div v-if="!loading && serviceData">
-        <el-row :gutter="20">
-          <el-col :span="16">
-            <el-descriptions title="基本信息" :column="2" border>
-              <el-descriptions-item label="服务ID">
-                {{ serviceData.id }}
-              </el-descriptions-item>
-              <el-descriptions-item label="服务名称">
-                {{ serviceData.name }}
-              </el-descriptions-item>
-              <el-descriptions-item label="服务分类">
-                {{ serviceData.category_name }}
-              </el-descriptions-item>
-              <el-descriptions-item label="服务价格">
-                <span style="color: #f56c6c; font-weight: bold">
-                  ¥{{ serviceData.price }}
-                </span>
-              </el-descriptions-item>
-              <el-descriptions-item label="服务状态">
-                <el-tag
-                  :type="serviceData.status === 1 ? 'success' : 'danger'"
-                  size="small"
-                >
-                  {{ serviceData.status === 1 ? '启用' : '禁用' }}
-                </el-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="排序值">
-                {{ serviceData.sort }}
-              </el-descriptions-item>
-              <el-descriptions-item label="创建时间">
-                {{ serviceData.created_at }}
-              </el-descriptions-item>
-              <el-descriptions-item label="更新时间">
-                {{ serviceData.updated_at }}
-              </el-descriptions-item>
-            </el-descriptions>
-
-            <el-descriptions
-              title="详细信息"
-              :column="1"
-              border
-              style="margin-top: 20px"
-            >
-              <el-descriptions-item label="服务描述">
-                <div class="description-content">
-                  {{ serviceData.description }}
-                </div>
-              </el-descriptions-item>
-              <el-descriptions-item label="服务详情">
-                <div class="content-area">
-                  <pre>{{ serviceData.content }}</pre>
-                </div>
-              </el-descriptions-item>
-              <el-descriptions-item label="标签" v-if="serviceData.tags">
-                <div class="tags-container">
-                  <el-tag
-                    v-for="tag in tagList"
-                    :key="tag"
-                    size="small"
-                    style="margin-right: 10px; margin-bottom: 5px"
-                  >
-                    {{ tag }}
-                  </el-tag>
-                </div>
-              </el-descriptions-item>
-            </el-descriptions>
-          </el-col>
-
-          <el-col :span="8">
-            <el-card header="服务图片" v-if="serviceData.image">
-              <div class="image-container">
-                <img
-                  :src="serviceData.image"
-                  alt="服务图片"
-                  class="service-image"
-                />
-              </div>
-            </el-card>
-
-            <el-card header="操作" style="margin-top: 20px">
-              <div class="action-buttons">
+    <!-- 加载状态 -->
+    <div v-loading="loading" class="loading-container">
+      <!-- 服务详情内容 -->
+      <div v-if="!loading && serviceData" class="service-detail">
+        <!-- 服务基本信息卡片 -->
+        <el-card class="info-card" shadow="hover">
+          <template #header>
+            <div class="card-header">
+              <span class="card-title">基本信息</span>
+              <div class="header-actions">
                 <el-button
                   type="primary"
                   :icon="ElIconEdit"
+                  size="small"
                   @click="handleEdit"
-                  v-if="checkPermission('service-edit')"
                 >
-                  编辑服务
-                </el-button>
-                <el-button
-                  type="danger"
-                  :icon="ElIconDelete"
-                  @click="handleDelete"
-                  v-if="checkPermission('service-delete')"
-                >
-                  删除服务
+                  编辑
                 </el-button>
               </div>
-            </el-card>
-          </el-col>
-        </el-row>
+            </div>
+          </template>
+          
+          <el-row :gutter="30">
+            <!-- 左侧信息 -->
+            <el-col :span="16">
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>服务名称</label>
+                  <span class="value service-name">{{ serviceData.name }}</span>
+                </div>
+                <div class="info-item">
+                  <label>服务分类</label>
+                  <span class="value">{{ serviceData.category_name }}</span>
+                </div>
+                <div class="info-item">
+                  <label>价格模板</label>
+                   <span class="value">{{ priceTemplateName || '-' }}</span>
+                </div>
+                <div class="info-item">
+                  <label>最低价格</label>
+                  <span class="value price">¥{{ serviceData.min_price }}/{{ serviceData.unit }}</span>
+                </div>
+                                 <div class="info-item">
+                   <label>服务状态</label>
+                  
+                     <span class="value">{{ serviceData.status === 1 ? '已启用' : '已关闭' }}</span>
+                 </div>
+                <div class="info-item">
+                  <label>排序值</label>
+                  <span class="value">{{ serviceData.sort_order || '-' }}</span>
+                </div>
+                   <div class="info-item">
+                    <label>申请数量</label>
+                    <span class="value application-count">{{ serviceData.application_count || 0 }}</span>
+                 </div>
+                <div class="info-item">
+                  <label>创建时间</label>
+                  <span class="value">{{ formatDate(serviceData.created_at) }}</span>
+                </div>
+                <div class="info-item">
+                  <label>更新时间</label>
+                  <span class="value">{{ formatDate(serviceData.updated_at) }}</span>
+                </div>
+                <div class="info-item">
+                
+                </div>
+              </div>
+            </el-col>
+
+            <!-- 右侧图片 -->
+            <el-col :span="8">
+              <div class="image-section">
+                <div class="image-label">
+                  服务图片
+                  <span class="image-tip" v-if="serviceData.image_url">（点击查看大图）</span>
+                </div>
+                <div class="image-container" v-if="serviceData.image_url">
+                  <el-image
+                    :src="$getImageUrl(serviceData.image_url)"
+                    :preview-src-list="[$getImageUrl(serviceData.image_url)]"
+                    :preview-teleported="true"
+                    alt="服务图片"
+                    class="service-image"
+                    fit="cover"
+                  >
+                    <template #placeholder>
+                      <div class="image-placeholder">
+                        <el-icon size="30" color="#c0c4cc">
+                          <Picture />
+                        </el-icon>
+                        <p>加载中...</p>
+                      </div>
+                    </template>
+                    <template #error>
+                      <div class="image-error">
+                        <el-icon size="30" color="#c0c4cc">
+                          <Picture />
+                        </el-icon>
+                        <p>加载失败</p>
+                      </div>
+                    </template>
+                  </el-image>
+                </div>
+                <div v-else class="no-image">
+                  <el-icon size="40" color="#d3d3d3">
+                    <Picture />
+                  </el-icon>
+                  <p>暂无图片</p>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+        </el-card>
+
+        <!-- 详细信息卡片 -->
+        <el-card class="detail-card" shadow="hover" v-if="serviceData.description || (serviceData.tags && serviceData.tags.length)">
+          <template #header>
+            <span class="card-title">详细信息</span>
+          </template>
+          
+          <!-- 服务描述 -->
+          <div v-if="serviceData.description" class="description-section">
+            <h4>服务描述</h4>
+            <div class="description-content">
+              <pre class="description-text">{{ serviceData.description }}</pre>
+            </div>
+          </div>
+
+          <!-- 服务标签 -->
+          <div v-if="serviceData.tags && serviceData.tags.length" class="tags-section">
+            <h4>服务标签</h4>
+            <div class="tags-container">
+              <el-tag
+                v-for="tag in serviceData.tags"
+                :key="tag"
+                size="default"
+                type="info"
+                effect="plain"
+                class="service-tag"
+              >
+                {{ tag }}
+              </el-tag>
+            </div>
+          </div>
+        </el-card>
       </div>
-    </el-card>
+    </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   ArrowLeft as ElIconArrowLeft,
   Edit as ElIconEdit,
   Delete as ElIconDelete,
+  Picture,
 } from '@element-plus/icons-vue'
-import { getServiceDetail, deleteService } from '@/api/service'
+import { getServiceDetail, deleteService, getPriceTemplateDetail } from '@/api/service'
 import checkPermission from '@/utils/permission'
 
-export default {
-  data() {
-    return {
-      serviceData: null,
-      loading: false,
-      serviceId: null,
-      ElIconArrowLeft,
-      ElIconEdit,
-      ElIconDelete,
+// 路由
+const router = useRouter()
+const route = useRoute()
+
+// 响应式数据
+const serviceData = ref(null)
+const loading = ref(false)
+const serviceId = ref(null)
+const priceTemplateName = ref('')
+
+// 由于tags现在是数组格式，不需要tagList计算属性
+
+// 格式化时间
+const formatDate = (dateStr) => {
+  if (!dateStr) return '-'
+  const date = new Date(dateStr)
+  return date.toLocaleString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  })
+}
+
+// 获取价格模板名称
+const getPriceTemplateName = async (templateId) => {
+  if (!templateId) {
+    priceTemplateName.value = ''
+    return
+  }
+  
+  try {
+    const res = await getPriceTemplateDetail(templateId)
+    if (res.code === 0 && res.data) {
+      priceTemplateName.value = res.data.name
+    } else {
+      priceTemplateName.value = '未知模板'
     }
-  },
-  name: 'ServiceDetail',
-  computed: {
-    tagList() {
-      if (!this.serviceData || !this.serviceData.tags) return []
-      return this.serviceData.tags.split(',').filter((tag) => tag.trim())
-    },
-  },
-  created() {
-    this.serviceId = this.$route.params.id
-    this.getServiceData()
-  },
-  methods: {
-    checkPermission,
+  } catch (error) {
+    console.error('获取价格模板详情失败:', error)
+    priceTemplateName.value = '获取失败'
+  }
+}
+
     // 获取服务详情
-    async getServiceData() {
-      if (!this.serviceId) {
-        this.$message.error('服务ID不存在')
-        this.$router.go(-1)
+const getServiceData = async () => {
+  if (!serviceId.value) {
+    ElMessage.error('服务ID不存在')
+    router.go(-1)
         return
       }
 
-      this.loading = true
+  loading.value = true
       try {
-        const res = await getServiceDetail(this.serviceId)
+    const res = await getServiceDetail(serviceId.value)
         if (res.code === 0) {
-          this.serviceData = res.data
+      serviceData.value = res.data
+      // 如果有价格模板ID，获取模板名称
+      if (res.data.price_template_id) {
+        await getPriceTemplateName(res.data.price_template_id)
+      }
         } else {
-          this.$message.error(res.msg || '获取服务详情失败')
-          this.$router.go(-1)
+      ElMessage.error(res.msg || '获取服务详情失败')
+      router.go(-1)
         }
       } catch (error) {
-        this.$message.error('获取服务详情失败')
+    ElMessage.error('获取服务详情失败')
         console.error('获取服务详情失败:', error)
-        this.$router.go(-1)
+    router.go(-1)
       } finally {
-        this.loading = false
+    loading.value = false
+  }
       }
-    },
+
     // 返回上一页
-    handleBack() {
-      this.$router.go(-1)
-    },
+const handleBack = () => {
+  router.go(-1)
+}
+
     // 编辑服务
-    handleEdit() {
-      this.$router.push(`/service/edit/${this.serviceId}`)
-    },
+const handleEdit = () => {
+  router.push(`/service/edit/${serviceId.value}`)
+}
+
     // 删除服务
-    async handleDelete() {
+const handleDelete = async () => {
       try {
-        await this.$confirm('确定要删除该服务吗？删除后不可恢复！', '警告', {
+    await ElMessageBox.confirm('确定要删除该服务吗？删除后不可恢复！', '警告', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
         })
 
-        const res = await deleteService(this.serviceId)
+    const res = await deleteService(serviceId.value)
         if (res.code === 0) {
-          this.$message.success(res.msg || '删除成功')
-          this.$router.push('/service/list')
+      ElMessage.success(res.msg || '删除成功')
+      router.push('/service/list')
         } else {
-          this.$message.error(res.msg || '删除失败')
+      ElMessage.error(res.msg || '删除失败')
         }
       } catch (error) {
         if (error !== 'cancel') {
-          this.$message.error('删除服务失败')
+      ElMessage.error('删除服务失败')
           console.error('删除服务失败:', error)
         }
       }
-    },
-  },
 }
+
+// 组件挂载时初始化
+onMounted(() => {
+  serviceId.value = route.params.id
+  getServiceData()
+})
 </script>
 
 <style scoped>
+.app-container {
+  /* 保持默认样式，与价格模板详情页面一致 */
+}
+
 .page-header {
   display: flex;
   align-items: center;
+  gap: 20px;
   margin-bottom: 20px;
+  margin-top: 10px;
 }
+
 .page-title {
+  margin: 0;
   font-size: 20px;
   font-weight: bold;
-  margin-left: 10px;
   color: #303133;
+  flex: 1;
 }
-.description-content {
-  line-height: 1.6;
-  color: #606266;
-}
-.content-area pre {
-  background-color: #f5f7fa;
-  border: 1px solid #e4e7ed;
-  border-radius: 4px;
-  padding: 15px;
-  line-height: 1.6;
-  color: #606266;
-  white-space: pre-wrap;
-  word-break: break-word;
-  max-height: 300px;
-  overflow-y: auto;
-}
-.tags-container {
-  line-height: 1.8;
-}
-.image-container {
-  text-align: center;
-}
-.service-image {
-  max-width: 100%;
-  max-height: 300px;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-.action-buttons {
+
+.header-actions {
   display: flex;
-  flex-direction: column;
   gap: 10px;
 }
-.action-buttons .el-button {
+
+.loading-container {
+  min-height: 400px;
+}
+
+.service-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.info-card, .detail-card {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #303133;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 32px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-item label {
+  font-size: 14px;
+  color: #909399;
+  font-weight: 500;
+}
+
+.info-item .value {
+  font-size: 16px;
+  color: #303133;
+  font-weight: 500;
+}
+
+.service-name {
+  color: #409eff;
+  font-weight: 600;
+}
+
+.price {
+  color: #f56c6c;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.application-count {
+  color: #67c23a;
+  font-weight: 600;
+}
+
+.image-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-label {
+  font-size: 14px;
+  color: #909399;
+  font-weight: 500;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.image-tip {
+  font-size: 12px;
+  color: #c0c4cc;
+  font-weight: normal;
+}
+
+.image-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  min-height: 200px;
+}
+
+.service-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.image-placeholder,
+.image-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #c0c4cc;
+  height: 200px;
   width: 100%;
 }
+
+.image-placeholder p,
+.image-error p {
+  margin: 8px 0 0 0;
+  font-size: 14px;
+}
+
+.no-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #c0c4cc;
+  height: 100%;
+}
+
+.no-image p {
+  margin: 8px 0 0 0;
+  font-size: 14px;
+}
+
+.description-section,
+.tags-section {
+  margin-bottom: 24px;
+}
+
+.description-section:last-child,
+.tags-section:last-child {
+  margin-bottom: 0;
+}
+
+.description-section h4,
+.tags-section h4 {
+  font-size: 16px;
+  color: #303133;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.description-content {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  line-height: 1.6;
+  color: #606266;
+  font-size: 14px;
+}
+
+.description-text {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background: none;
+  border: none;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.service-tag {
+  background: #ecf5ff;
+  border-color: #d9ecff;
+  color: #409eff;
+  font-weight: 500;
+}
+
 @media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+  }
+  
   .page-header {
     flex-direction: column;
     align-items: flex-start;
+    padding: 12px 0;
   }
-  .page-title {
+  
+  .header-title {
     margin-left: 0;
-    margin-top: 10px;
+    margin-top: 12px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }
 </style>

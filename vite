@@ -54,8 +54,8 @@ Deprecation Warning [import]: Sass @import rules are deprecated and will be remo
 More info and automated migrator: https://sass-lang.com/d/import
 
   ╷
-4 │ @import './element-ui.scss';
-  │         ^^^^^^^^^^^^^^^^^^^
+4 │ @import './element-plus.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^
   ╵
     src/styles/index.scss 4:9  root stylesheet
 

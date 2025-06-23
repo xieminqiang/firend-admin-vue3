@@ -16,6 +16,11 @@ function filterAsyncRoutes(routes, authKey) {
         tmp.children = filterAsyncRoutes(tmp.children, authKey)
       }
       res.push(tmp)
+    } else {
+      // 在开发环境中，输出被过滤的路由，便于调试
+      if (process.env.NODE_ENV === 'development') {
+        console.log('权限过滤:', v.name, '用户权限:', authKey)
+      }
     }
   }
   return res

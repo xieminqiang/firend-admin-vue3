@@ -8,7 +8,7 @@
     :on-success="handleSuccess"
     :on-error="handleError"
   >
-    <img v-if="url" :src="url" class="avatar" />
+    <img v-if="url" :src="getDisplayUrl(url)" class="avatar" />
     <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
   </el-upload>
 </template>
@@ -17,6 +17,7 @@
 import { Plus } from '@element-plus/icons-vue'
 import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { upload } from '@/api/common'
+import { getImageUrl } from '@/utils/image'
 
 export default {
   components: {
@@ -32,6 +33,13 @@ export default {
     return {
       url: this.value,
       prev: this.value,
+    }
+  },
+  watch: {
+    // 监听props.value的变化，用于外部数据更新时的图片回显
+    value(newVal) {
+      this.url = newVal
+      this.prev = newVal
     }
   },
   methods: {
@@ -74,6 +82,18 @@ export default {
       $emit(this, 'on-error', err)
     },
     handlerChange(file, fileList) {},
+    // 获取显示用的图片URL
+    getDisplayUrl(url) {
+      if (!url) return ''
+      
+      // 如果是本地预览URL（blob:开头），直接返回
+      if (url.startsWith('blob:')) {
+        return url
+      }
+      
+      // 其他情况使用全局图片URL处理方法
+      return getImageUrl(url)
+    },
     buildUrl(file) {
       // 获取上传图片的本地URL，用于上传前的本地预览
       var URL = null

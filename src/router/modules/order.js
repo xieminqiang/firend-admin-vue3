@@ -5,7 +5,7 @@ const orderRouter = {
   path: '/order',
   component: Layout,
   name: 'order',
-  redirect: '/order',
+  redirect: '/order/order',
   meta: { title: '订单管理', icon: 'Document' },
   alwaysShow: true,
   children: [

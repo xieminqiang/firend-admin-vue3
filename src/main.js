@@ -5,11 +5,11 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import '@/styles/index.scss' // global css
 
 import App from './App.vue'
-import pinia from './store' // 引入Pinia状态管理
+import pinia from './stores' // 引入Pinia状态管理
 import router from './router'
 
 // 导入组件
@@ -23,6 +23,7 @@ import TIMUploadPlugin from 'tim-upload-plugin'
 import TIMProfanityFilterPlugin from 'tim-profanity-filter-plugin'
 
 import echarts from './echars/index' // npm install echarts --save
+import { getImageUrl, getThumbnailUrl, getImageUrls } from '@/utils/image' // 图片处理工具
 
 let options = {
   SDKAppID: 1400823559, // 接入时需要将0替换为您的即时通信 IM 应用的 SDKAppID
@@ -51,6 +52,11 @@ app.config.globalProperties.routerAppend = (path, pathToAppend) => {
   return path + (path.endsWith('/') ? '' : '/') + pathToAppend
 }
 
+// 全局图片处理方法
+app.config.globalProperties.$getImageUrl = getImageUrl
+app.config.globalProperties.$getThumbnailUrl = getThumbnailUrl
+app.config.globalProperties.$getImageUrls = getImageUrls
+
 // 注册Element Plus图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
@@ -60,7 +66,9 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.component('SvgIcon', SvgIcon)
 
 // 注册插件
-app.use(ElementPlus)
+app.use(ElementPlus, {
+  locale: zhCn, // 设置为中文
+})
 app.use(permission)
 app.use(pinia) // 使用Pinia状态管理
 app.use(router)

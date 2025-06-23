@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ElMessageBox as MessageBox, ElMessage as Message } from 'element-plus'
-import store from '@/store'
+import store from '@/stores'
 import { getToken } from '@/utils/auth'
 
 const requestTimeOut = () => {

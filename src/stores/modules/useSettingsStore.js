@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useSettingsStore = defineStore('settings', {
   state: () => ({
-    title: '伴集',
+    title: '随伴行',
     fixedHeader: true,
     sidebarLogo: true,
     showSettings: false,

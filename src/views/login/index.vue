@@ -4,7 +4,7 @@
       <div class="login-left">
         <div class="welcome-text">
           <h2>欢迎使用</h2>
-          <h1>伴集系统</h1>
+          <h1>随伴行系统</h1>
           <p>让管理更简单，让工作更高效</p>
           <div class="decoration-circles">
             <div class="circle circle-1"></div>

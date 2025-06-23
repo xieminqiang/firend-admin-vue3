@@ -1,4 +1,4 @@
-import store from '@/store'
+import { usePermissionStore } from '@/stores/modules/usePermissionStore'
 
 /**
  * @param {String|Array} value
@@ -7,7 +7,8 @@ import store from '@/store'
  */
 export default function checkPermission(value) {
   if (value) {
-    const hasAuth = store.getters && store.getters.authKey
+    const permissionStore = usePermissionStore()
+    const hasAuth = permissionStore.authKeys || []
 
     if (typeof value === 'string') {
       return hasAuth.includes(value)

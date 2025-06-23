@@ -39,7 +39,7 @@ export default {
       const first = matched[0]
 
       if (!this.isDashboard(first)) {
-        matched = [{ path: '/dashboard', meta: { title: '伴集' } }].concat(
+        matched = [{ path: '/dashboard', meta: { title: '随伴行' } }].concat(
           matched
         )
       }
@@ -62,12 +62,40 @@ export default {
       return toPath(params)
     },
     handleLink(item) {
-      const { redirect, path } = item
-      if (redirect) {
-        this.$router.push(redirect)
-        return
+      try {
+        const { redirect, path } = item
+        
+        // 防止循环重定向
+        if (redirect && redirect === path) {
+          console.warn('检测到循环重定向:', redirect)
+          return
+        }
+        
+        if (redirect) {
+          // 检查重定向路径是否与当前路径相同
+          if (redirect === this.$route.path) {
+            console.warn('重定向路径与当前路径相同，跳过导航:', redirect)
+            return
+          }
+          this.$router.push(redirect)
+          return
+        }
+        
+        // 编译路径并检查结果
+        const compiledPath = this.pathCompile(path)
+        if (compiledPath === this.$route.path) {
+          console.warn('编译后的路径与当前路径相同，跳过导航:', compiledPath)
+          return
+        }
+        
+        this.$router.push(compiledPath)
+      } catch (error) {
+        console.error('面包屑导航错误:', error)
+        // 如果出现错误，尝试直接跳转到路径
+        if (item.path && item.path !== this.$route.path) {
+          this.$router.push(item.path)
+        }
       }
-      this.$router.push(this.pathCompile(path))
     },
   },
 }

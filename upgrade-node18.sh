@@ -1,8 +1,8 @@
 #!/bin/bash
-# 伴集 Admin - Node.js v18+ 升级脚本
+# 随伴行 Admin - Node.js v18+ 升级脚本
 # 支持 Node.js v12+，推荐 v18+
 
-echo "🚀 开始升级 伴集 Admin 到 Node.js v18+ 兼容版本..."
+echo "🚀 开始升级 随伴行 Admin 到 Node.js v18+ 兼容版本..."
 
 # 检查 Node.js 版本
 NODE_VERSION=$(node --version | cut -d'v' -f2 | cut -d'.' -f1)
