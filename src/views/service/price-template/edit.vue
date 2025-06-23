@@ -275,7 +275,7 @@ const handleSubmit = async () => {
       return
     }
     
-    ElMessage.success('保存成功！已自动同步相关服务的数据')
+    ElMessage.success('保存成功')
     router.push('/service/price-template')
   } catch (error) {
     console.error('保存价格模板失败:', error)

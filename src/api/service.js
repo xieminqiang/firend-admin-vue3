@@ -185,6 +185,28 @@ export function getPriceTemplateDetail(id) {
 }
 
 /**
+ * 获取价格模板绑定的区域列表
+ * @param {string|number} id - 模板ID
+ */
+export function getPriceTemplateBoundRegions(id) {
+  return request({
+    url: `/price-template/${id}/bound-regions`,
+    method: 'get',
+  })
+}
+
+/**
+ * 获取服务绑定的区域和价格模板列表
+ * @param {string|number} id - 服务ID
+ */
+export function getServiceBoundRegions(id) {
+  return request({
+    url: `/service/${id}/bound-regions`,
+    method: 'get',
+  })
+}
+
+/**
  * 添加价格模板
  * @param {Object} data - 模板数据
  */

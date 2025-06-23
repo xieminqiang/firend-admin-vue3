@@ -65,51 +65,11 @@
           </el-col>
         </el-row>
 
-        <el-row :gutter="20">
-          <el-col :span="16">
-            <el-form-item label="价格模板" prop="price_template_id">
-              <el-select
-                v-model="formData.price_template_id"
-                placeholder="请选择价格模板"
-                style="width: 300px"
-                clearable
-              >
-                <el-option
-                  v-for="template in priceTemplateOptions"
-                  :key="template.id"
-                  :label="template.name"
-                  :value="template.id"
-                >
-                  <span>{{ template.name }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ template.unit }}</span>
-                </el-option>
-              </el-select>
-              <div class="form-item-tip">选择价格模板后，系统将按模板设置的等级价格计费</div>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="最低价格" prop="min_price">
-              <span class="readonly-value">{{ formData.min_price || '0.00' }}</span>
-              <div class="form-item-tip">由价格模板设置</div>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="最小数量" prop="min_quantity">
-              <span class="readonly-value">{{ formData.min_quantity }}</span>
-              <div class="form-item-tip">由价格模板设置</div>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="计价单位" prop="unit">
-              <span class="readonly-value">{{ formData.unit }}</span>
-              <div class="form-item-tip">由价格模板设置</div>
-            </el-form-item>
-          </el-col>
-        </el-row>
+
 
         <el-row :gutter="20">
           <el-col :span="16">
-            <el-form-item label="服务图片" prop="image_url">
+            <el-form-item label="服务图片" prop="image_url" required>
               <upload
                 v-model:value="formData.image_url"
                 @on-success="handleUploadSuccess"
@@ -177,21 +137,37 @@
               
               <!-- 自定义输入框 -->
               <div class="custom-input-section">
-                <el-input
-                  v-model="customTagInput"
-                  placeholder="输入自定义标签"
-                  @keyup.enter="addCustomTag"
-                  maxlength="20"
-                  show-word-limit
-                />
-                <el-button
-                  type="primary"
-                  size="small"
-                  @click="addCustomTag"
-                  :disabled="!customTagInput.trim()"
-                >
-                  添加
-                </el-button>
+                <div class="input-wrapper">
+                  <el-input
+                    v-model="customTagInput"
+                    placeholder="输入自定义标签，支持用逗号、分号、空格分隔多个标签"
+                    @keyup.enter="addCustomTag"
+                    maxlength="200"
+                    show-word-limit
+                    type="textarea"
+                    :rows="2"
+                    resize="none"
+                  />
+                  <div class="input-tips">
+                    💡 提示：可以一次输入多个标签，用 <code>,</code> 或 <code>;</code> 或 <code>空格</code> 分隔
+                  </div>
+                </div>
+                <div class="action-buttons">
+                  <el-button
+                    type="primary"
+                    size="small"
+                    @click="addCustomTag"
+                    :disabled="!customTagInput.trim()"
+                  >
+                    批量添加
+                  </el-button>
+                  <el-button
+                    size="small"
+                    @click="clearCustomInput"
+                  >
+                    清空
+                  </el-button>
+                </div>
               </div>
               
               <!-- 推荐标签 -->
@@ -274,7 +250,7 @@ import { ref, reactive, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Plus, Close, Check, ArrowDown } from '@element-plus/icons-vue'
-import { addService, getServiceCategories, getTagsByType, getPriceTemplateList, getPriceTemplateDetail } from '@/api/service'
+import { addService, getServiceCategories, getTagsByType } from '@/api/service'
 import upload from '@/components/Upload/icon-upload.vue'
 import { getRelativePath } from '@/utils/image'
 
@@ -298,10 +274,6 @@ const formData = reactive({
   description: '',
   tags: [],
   sort_order: 100,
-  price_template_id: null,
-  min_price: 0,
-  min_quantity: 1,
-  unit: '小时',
 })
 
 // 表单验证规则
@@ -327,8 +299,8 @@ const rules = {
       trigger: 'blur',
     },
   ],
-  price_template_id: [
-    { required: true, message: '请选择价格模板', trigger: 'change' },
+  image_url: [
+    { required: true, message: '请上传服务图片', trigger: 'change' },
   ],
   tags: [
     { 
@@ -343,7 +315,6 @@ const rules = {
 
 // 其他响应式数据
 const categoryOptions = ref([])
-const priceTemplateOptions = ref([])
 const availableTags = ref([])
 const availableTagsForSelection = ref([])
 const showTagSelector = ref(false)
@@ -369,53 +340,7 @@ const getCategories = async () => {
   }
 }
 
-// 获取价格模板列表
-const getPriceTemplates = async () => {
-  try {
-    const res = await getPriceTemplateList()
-    if (res.code === 0) {
-      priceTemplateOptions.value = res.data || []
-    }
-  } catch (error) {
-    console.error('获取价格模板失败:', error)
-  }
-}
 
-// 加载价格模板详情并设置最低价格、最小数量和单位
-const loadPriceTemplateDetails = async (templateId) => {
-  try {
-    const res = await getPriceTemplateDetail(templateId)
-    if (res.code === 0 && res.data) {
-      const templateData = res.data
-      
-      // 设置最小数量和单位
-      if (templateData.min_quantity !== undefined) {
-        formData.min_quantity = templateData.min_quantity
-      }
-      if (templateData.unit) {
-        formData.unit = templateData.unit
-      }
-      
-      // 设置最低价格
-      if (templateData.levels && templateData.levels.length > 0) {
-        // 查找 level_id == 1 的价格作为最低价格
-        const level1Price = templateData.levels.find(level => level.level_order === 1)
-        if (level1Price) {
-          formData.min_price = level1Price.price
-        } else {
-          // 如果没有level_id=1，取第一个等级的价格
-          const firstLevel = templateData.levels[0]
-          if (firstLevel) {
-            formData.min_price = firstLevel.price
-          }
-        }
-      }
-    }
-  } catch (error) {
-    console.error('获取价格模板详情失败:', error)
-    ElMessage.error('获取价格模板详情失败')
-  }
-}
 
 // 根据分类获取标签
 const getTagsByCategory = async (categoryId, resetPage = true) => {
@@ -461,24 +386,81 @@ const removeTag = (index) => {
   formData.tags.splice(index, 1)
 }
 
-// 添加自定义标签
+// 添加自定义标签（支持批量）
 const addCustomTag = () => {
-  const tagName = customTagInput.value.trim()
-  if (!tagName) return
+  const inputText = customTagInput.value.trim()
+  if (!inputText) return
   
-  if (formData.tags.includes(tagName)) {
-    ElMessage.warning('标签已存在')
+  // 支持多种分隔符：逗号、分号、空格、换行
+  const separators = /[,;，；\s\n]+/
+  const tagNames = inputText
+    .split(separators)
+    .map(tag => tag.trim())
+    .filter(tag => tag && tag.length <= 20) // 过滤空标签和过长标签
+  
+  if (tagNames.length === 0) {
+    ElMessage.warning('请输入有效的标签内容')
     return
   }
   
-  if (formData.tags.length >= 5) {
-    ElMessage.warning('最多只能选择5个标签')
-    return
+  // 检查重复和长度限制
+  const newTags = []
+  const duplicateTags = []
+  const tooLongTags = []
+  
+  for (const tagName of tagNames) {
+    if (tagName.length > 20) {
+      tooLongTags.push(tagName)
+      continue
+    }
+    
+    if (formData.tags.includes(tagName)) {
+      duplicateTags.push(tagName)
+      continue
+    }
+    
+    if (formData.tags.length + newTags.length >= 5) {
+      ElMessage.warning('最多只能选择5个标签')
+      break
+    }
+    
+    newTags.push(tagName)
   }
   
-  formData.tags.push(tagName)
+  // 添加新标签
+  if (newTags.length > 0) {
+    formData.tags.push(...newTags)
+    customTagInput.value = ''
+    
+    let message = `成功添加 ${newTags.length} 个标签`
+    if (duplicateTags.length > 0) {
+      message += `，跳过 ${duplicateTags.length} 个重复标签`
+    }
+    if (tooLongTags.length > 0) {
+      message += `，跳过 ${tooLongTags.length} 个过长标签（超过20字符）`
+    }
+    
+    ElMessage.success(message)
+    
+    // 如果添加了标签但还有空间，不关闭选择器
+    if (formData.tags.length >= 5) {
+      closeTagSelector()
+    }
+  } else {
+    let message = '没有添加任何标签'
+    if (duplicateTags.length > 0) {
+      message += `，所有标签都已存在`
+    }
+    if (tooLongTags.length > 0) {
+      message += `，所有标签都超过20字符限制`
+    }
+    ElMessage.warning(message)
+  }
+}
+
+// 清空自定义输入
+const clearCustomInput = () => {
   customTagInput.value = ''
-  closeTagSelector()
 }
 
 // 切换标签选中状态
@@ -593,20 +575,9 @@ watch(
   }
 )
 
-// 监听价格模板变化
-watch(
-  () => formData.price_template_id,
-  async (newVal) => {
-    if (newVal) {
-      await loadPriceTemplateDetails(newVal)
-    }
-  }
-)
-
-// 组件挂载时获取分类和价格模板
+// 组件挂载时获取分类
 onMounted(() => {
   getCategories()
-  getPriceTemplates()
 })
 </script>
 
@@ -884,13 +855,37 @@ onMounted(() => {
 
 .custom-input-section {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   margin-bottom: 24px;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
-.custom-input-section .el-input {
+.input-wrapper {
   flex: 1;
+}
+
+.input-tips {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #909399;
+  line-height: 1.4;
+}
+
+.input-tips code {
+  background-color: #f1f2f6;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  color: #e83e8c;
+  margin: 0 2px;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-top: 4px;
 }
 
 .recommended-tags h5 {

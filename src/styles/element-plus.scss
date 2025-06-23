@@ -295,7 +295,7 @@
   }
   
   &--info {
-    background: $gradientSecondary;
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
     color: white;
   }
 }

@@ -106,11 +106,7 @@
         align="center"
         width="120"
       />
-      <el-table-column label="最低价格" prop="min_price" align="center" width="100">
-        <template v-slot="scope">
-          <span class="price-text">¥{{ scope.row.min_price }}</span>
-        </template>
-      </el-table-column>
+
       <el-table-column label="状态" prop="status" align="center" width="90">
         <template v-slot="scope">
           <el-tag

@@ -104,7 +104,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" width="220px" label="操作">
+      <el-table-column align="center" width="120px" label="操作">
         <template v-slot="scope">
           <el-button 
             size="mini" 
@@ -112,14 +112,6 @@
             @click="handleEdit(scope.row)"
           >
             编辑
-          </el-button>
-          <el-button 
-            size="mini" 
-            type="warning" 
-            @click="handleSyncServices(scope.row)"
-            :loading="scope.row.syncing"
-          >
-            同步价格
           </el-button>
           <!-- <el-button 
             size="mini" 
@@ -153,7 +145,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Search as ElIconSearch, Plus as ElIconPlus } from '@element-plus/icons-vue'
-import { getPriceTemplateList, deletePriceTemplate, syncServiceMinPricesForTemplate } from '@/api/service'
+import { getPriceTemplateList, deletePriceTemplate } from '@/api/service'
 
 // 响应式数据
 const router = useRouter()
@@ -235,42 +227,7 @@ const handleDelete = async (row) => {
   }
 }
 
-// 同步服务价格
-const handleSyncServices = async (row) => {
-  try {
-    await ElMessageBox.confirm(
-      `确定要同步价格模板「${row.name}」相关服务的最低价格吗？\n这将根据模板的1级价格更新所有关联服务的最低价格。`, 
-      '同步价格确认', 
-      {
-        confirmButtonText: '确定同步',
-        cancelButtonText: '取消',
-        type: 'info',
-      }
-    )
-    
-    // 设置加载状态
-    row.syncing = true
-    
-    const res = await syncServiceMinPricesForTemplate(row.id)
-    if (res.code === 0) {
-      const data = res.data
-      ElMessage.success({
-        message: data.message || `同步成功！已更新 ${data.updated_services_count} 个服务的最低价格`,
-        duration: 3000,
-      })
-    } else {
-      ElMessage.error(res.message || '同步失败')
-    }
-  } catch (error) {
-    if (error !== 'cancel') {
-      ElMessage.error('同步失败')
-      console.error('同步服务价格失败:', error)
-    }
-  } finally {
-    // 清除加载状态
-    row.syncing = false
-  }
-}
+
 
 // 分页处理
 const handleSizeChange = (val) => {

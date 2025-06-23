@@ -19,14 +19,14 @@
             <div class="card-header">
               <span class="card-title">基本信息</span>
               <div class="header-actions">
-                <el-button
+                <!-- <el-button
                   type="primary"
                   :icon="ElIconEdit"
                   size="small"
                   @click="handleEdit"
                 >
                   编辑
-                </el-button>
+                </el-button> -->
               </div>
             </div>
           </template>
@@ -43,14 +43,7 @@
                   <label>服务分类</label>
                   <span class="value">{{ serviceData.category_name }}</span>
                 </div>
-                <div class="info-item">
-                  <label>价格模板</label>
-                   <span class="value">{{ priceTemplateName || '-' }}</span>
-                </div>
-                <div class="info-item">
-                  <label>最低价格</label>
-                  <span class="value price">¥{{ serviceData.min_price }}/{{ serviceData.unit }}</span>
-                </div>
+
                                  <div class="info-item">
                    <label>服务状态</label>
                   
@@ -154,6 +147,72 @@
             </div>
           </div>
         </el-card>
+
+        <!-- 绑定区域和价格模板卡片 -->
+        <el-card class="detail-card" shadow="hover" v-if="serviceData">
+          <template #header>
+            <span class="card-title">
+              绑定区域和价格模板
+              <span class="region-count" v-if="boundRegions.length > 0">
+                （共 {{ boundRegions.length }} 个区域）
+              </span>
+            </span>
+          </template>
+          
+          <div v-loading="regionLoading">
+            <div v-if="boundRegions.length === 0" class="empty-regions">
+              <el-empty description="暂无配置区域" />
+            </div>
+            <div v-else class="regions-table">
+              <el-table :data="boundRegions" stripe>
+                <el-table-column label="区域名称" prop="city_name" align="center" min-width="120" />
+                <el-table-column label="服务状态" align="center" width="100">
+                  <template v-slot="scope">
+                    <el-tag 
+                      :type="scope.row.is_enabled === 1 ? 'success' : 'danger'"
+                      size="small"
+                    >
+                      {{ scope.row.is_enabled_text }}
+                    </el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column label="价格模板" align="center" min-width="150">
+                  <template v-slot="scope">
+                    <span 
+                      v-if="scope.row.price_template_id" 
+                      class="template-name"
+                      @click="handleViewTemplate(scope.row.price_template_id)"
+                    >
+                      {{ scope.row.template_name }}
+                    </span>
+                    <span v-else class="no-template">未绑定模板</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="模板价格" align="center" width="120">
+                  <template v-slot="scope">
+                    <span v-if="scope.row.price_template_id" class="price-text">
+                      ¥{{ scope.row.template_min_price }}
+                    </span>
+                    <span v-else>-</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="计费单位" align="center" width="100">
+                  <template v-slot="scope">
+                    <span v-if="scope.row.price_template_id">
+                      {{ scope.row.template_unit }}
+                    </span>
+                    <span v-else>-</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="备注" prop="note" align="center" min-width="150">
+                  <template v-slot="scope">
+                    <span class="note-text">{{ scope.row.note || '无' }}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+          </div>
+        </el-card>
       </div>
     </div>
   </div>
@@ -169,7 +228,7 @@ import {
   Delete as ElIconDelete,
   Picture,
 } from '@element-plus/icons-vue'
-import { getServiceDetail, deleteService, getPriceTemplateDetail } from '@/api/service'
+import { getServiceDetail, deleteService, getServiceBoundRegions } from '@/api/service'
 import checkPermission from '@/utils/permission'
 
 // 路由
@@ -179,9 +238,9 @@ const route = useRoute()
 // 响应式数据
 const serviceData = ref(null)
 const loading = ref(false)
+const regionLoading = ref(false)
 const serviceId = ref(null)
-const priceTemplateName = ref('')
-
+const boundRegions = ref([])
 // 由于tags现在是数组格式，不需要tagList计算属性
 
 // 格式化时间
@@ -198,26 +257,6 @@ const formatDate = (dateStr) => {
   })
 }
 
-// 获取价格模板名称
-const getPriceTemplateName = async (templateId) => {
-  if (!templateId) {
-    priceTemplateName.value = ''
-    return
-  }
-  
-  try {
-    const res = await getPriceTemplateDetail(templateId)
-    if (res.code === 0 && res.data) {
-      priceTemplateName.value = res.data.name
-    } else {
-      priceTemplateName.value = '未知模板'
-    }
-  } catch (error) {
-    console.error('获取价格模板详情失败:', error)
-    priceTemplateName.value = '获取失败'
-  }
-}
-
     // 获取服务详情
 const getServiceData = async () => {
   if (!serviceId.value) {
@@ -231,10 +270,6 @@ const getServiceData = async () => {
     const res = await getServiceDetail(serviceId.value)
         if (res.code === 0) {
       serviceData.value = res.data
-      // 如果有价格模板ID，获取模板名称
-      if (res.data.price_template_id) {
-        await getPriceTemplateName(res.data.price_template_id)
-      }
         } else {
       ElMessage.error(res.msg || '获取服务详情失败')
       router.go(-1)
@@ -282,10 +317,35 @@ const handleDelete = async () => {
       }
 }
 
+// 获取绑定区域列表
+const getBoundRegions = async () => {
+  regionLoading.value = true
+  try {
+    const res = await getServiceBoundRegions(serviceId.value)
+    if (res.code === 0) {
+      boundRegions.value = res.data.regions || []
+    } else {
+      ElMessage.error(res.message || '获取绑定区域失败')
+    }
+  } catch (error) {
+    ElMessage.error('获取绑定区域失败')
+    console.error('获取绑定区域失败:', error)
+  } finally {
+    regionLoading.value = false
+  }
+}
+
+// 查看价格模板详情
+const handleViewTemplate = (templateId) => {
+  // 跳转到价格模板详情页面
+  router.push(`/service/price-template/detail/${templateId}`)
+}
+
 // 组件挂载时初始化
-onMounted(() => {
+onMounted(async () => {
   serviceId.value = route.params.id
-  getServiceData()
+  await getServiceData()
+  await getBoundRegions()
 })
 </script>
 
@@ -516,6 +576,47 @@ onMounted(() => {
   border-color: #d9ecff;
   color: #409eff;
   font-weight: 500;
+}
+
+/* 绑定区域相关样式 */
+.region-count {
+  font-size: 14px;
+  color: #909399;
+  font-weight: normal;
+}
+
+.empty-regions {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.regions-table {
+  margin-top: 10px;
+}
+
+.template-name {
+  color: #409eff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.template-name:hover {
+  text-decoration: underline;
+}
+
+.no-template {
+  color: #909399;
+  font-style: italic;
+}
+
+.price-text {
+  font-weight: bold;
+  color: #e6a23c;
+}
+
+.note-text {
+  color: #606266;
+  font-size: 13px;
 }
 
 @media (max-width: 768px) {

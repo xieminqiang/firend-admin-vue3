@@ -54,6 +54,60 @@
           </div>
         </div>
       </div>
+
+      <!-- 绑定区域详情 -->
+      <!-- <div class="detail-section">
+        <h3 class="section-title">
+          绑定区域详情
+          <span class="region-count" v-if="boundRegions.length > 0">
+            （共 {{ boundRegions.length }} 个区域）
+          </span>
+        </h3>
+        <div v-loading="regionLoading">
+          <div v-if="boundRegions.length === 0" class="empty-regions">
+            <el-empty description="暂无绑定区域" />
+          </div>
+          <div v-else class="regions-table">
+            <el-table :data="boundRegions" stripe>
+              <el-table-column label="服务名称" prop="service_name" align="center" min-width="150" />
+              <el-table-column label="区域名称" prop="city_name" align="center" min-width="120" />
+              <el-table-column label="服务状态" align="center" width="100">
+                <template v-slot="scope">
+                  <el-tag 
+                    :type="scope.row.is_enabled === 1 ? 'success' : 'danger'"
+                    size="small"
+                  >
+                    {{ scope.row.is_enabled_text }}
+                  </el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column label="模板价格" align="center" width="120">
+                <template v-slot="scope">
+                  <span class="price-text">¥{{ scope.row.template_min_price }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="计费单位" prop="template_unit" align="center" width="100" />
+              <el-table-column label="备注" prop="note" align="center" min-width="150">
+                <template v-slot="scope">
+                  <span class="note-text">{{ scope.row.note || '无' }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" align="center" width="120">
+                <template v-slot="scope">
+                  <el-button 
+                    type="primary" 
+                    size="small" 
+                    link
+                    @click="handleViewRegionConfig(scope.row)"
+                  >
+                    查看配置
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </div>
+      </div> -->
     </el-card>
 
     <!-- 编辑等级价格对话框 -->
@@ -108,7 +162,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { ArrowLeft as ElIconArrowLeft } from '@element-plus/icons-vue'
-import { getPriceTemplateDetail, editPriceTemplateLevel } from '@/api/service'
+import { getPriceTemplateDetail, editPriceTemplateLevel, getPriceTemplateBoundRegions } from '@/api/service'
 
 // 响应式数据
 const router = useRouter()
@@ -116,9 +170,11 @@ const route = useRoute()
 const editFormRef = ref(null)
 const loading = ref(false)
 const updating = ref(false)
+const regionLoading = ref(false)
 const templateId = ref(null)
 const templateInfo = ref({})
 const templateLevels = ref([])
+const boundRegions = ref([])
 const editDialogVisible = ref(false)
 
 const editForm = reactive({
@@ -168,7 +224,7 @@ const getTemplateDetail = async () => {
 
 // 返回列表页
 const handleCancel = () => {
-  router.push('/service/price-template')
+  router.go(-1)
 }
 
 // 编辑模板
@@ -213,10 +269,41 @@ const handleUpdateLevel = async () => {
   }
 }
 
+// 获取绑定区域列表
+const getBoundRegions = async () => {
+  regionLoading.value = true
+  try {
+    const res = await getPriceTemplateBoundRegions(templateId.value)
+    if (res.code === 0) {
+      boundRegions.value = res.data.regions || []
+    } else {
+      ElMessage.error(res.message || '获取绑定区域失败')
+    }
+  } catch (error) {
+    ElMessage.error('获取绑定区域失败')
+    console.error('获取绑定区域失败:', error)
+  } finally {
+    regionLoading.value = false
+  }
+}
+
+// 查看区域配置
+const handleViewRegionConfig = (region) => {
+  // 跳转到区域服务配置页面，带上筛选参数
+  router.push({
+    path: '/service/city-config',
+    query: {
+      service_id: region.service_id,
+      city_code: region.city_code
+    }
+  })
+}
+
 // 生命周期
 onMounted(async () => {
   templateId.value = route.params.id
   await getTemplateDetail()
+  // await getBoundRegions()
 })
 
 // 辅助函数
@@ -341,5 +428,31 @@ const formatDate = (dateStr) => {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+/* 绑定区域相关样式 */
+.region-count {
+  font-size: 14px;
+  color: #909399;
+  font-weight: normal;
+}
+
+.empty-regions {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.regions-table {
+  margin-top: 10px;
+}
+
+.price-text {
+  font-weight: bold;
+  color: #e6a23c;
+}
+
+.note-text {
+  color: #606266;
+  font-size: 13px;
 }
 </style> 
