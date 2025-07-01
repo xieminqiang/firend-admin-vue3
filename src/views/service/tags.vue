@@ -43,6 +43,11 @@
             <el-option label="服务类" :value="1" />
             <el-option label="娱乐类" :value="2" />
             <el-option label="运动类" :value="3" />
+            <el-option label="个性特质" :value="4" />
+            <el-option label="我的爱好" :value="5" />
+            <el-option label="外貌风格" :value="6" />
+            <el-option label="专业技能" :value="7" />
+            <el-option label="热门推荐" :value="8" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -92,7 +97,7 @@
           <template #default="{ row }">
             <div class="tag-name-cell">
               <el-tag 
-                :type="getTagTypeColor(row.tag_type)" 
+                type="primary" 
                 size="small"
                 round
               >
@@ -103,7 +108,7 @@
         </el-table-column>
         <el-table-column prop="tag_type" label="标签类型" width="120">
           <template #default="{ row }">
-            <el-tag :type="getTagTypeColor(row.tag_type)" effect="light">
+            <el-tag type="primary" effect="light">
               {{ getTagTypeName(row.tag_type) }}
             </el-tag>
           </template>
@@ -194,29 +199,71 @@
             </el-option>
             <el-option label="娱乐类" :value="2">
               <div class="option-item">
-                <el-tag type="success" size="small">娱乐类</el-tag>
+                <el-tag type="primary" size="small">娱乐类</el-tag>
                 <span>娱乐活动相关的标签</span>
               </div>
             </el-option>
             <el-option label="运动类" :value="3">
               <div class="option-item">
-                <el-tag type="warning" size="small">运动类</el-tag>
+                <el-tag type="primary" size="small">运动类</el-tag>
                 <span>运动健身相关的标签</span>
+              </div>
+            </el-option>
+            <el-option label="个性特质" :value="4">
+              <div class="option-item">
+                <el-tag type="primary" size="small">个性特质</el-tag>
+                <span>个人性格特点的标签</span>
+              </div>
+            </el-option>
+            <el-option label="我的爱好" :value="5">
+              <div class="option-item">
+                <el-tag type="primary" size="small">我的爱好</el-tag>
+                <span>个人兴趣爱好标签</span>
+              </div>
+            </el-option>
+            <el-option label="外貌风格" :value="6">
+              <div class="option-item">
+                <el-tag type="primary" size="small">外貌风格</el-tag>
+                <span>外观和风格相关的标签</span>
+              </div>
+            </el-option>
+            <el-option label="专业技能" :value="7">
+              <div class="option-item">
+                <el-tag type="primary" size="small">专业技能</el-tag>
+                <span>专业能力和技能标签</span>
+              </div>
+            </el-option>
+            <el-option label="热门推荐" :value="8">
+              <div class="option-item">
+                <el-tag type="primary" size="small">热门推荐</el-tag>
+                <span>热门和推荐的标签</span>
               </div>
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="排序" prop="sort_order">
-          <el-input-number
-            v-model="form.sort_order"
-            :min="0"
-            :max="999"
-            style="width: 100%"
-            placeholder="数值越小越靠前"
-          />
+          <div class="sort-input-container">
+            <el-input-number
+              v-model="form.sort_order"
+              :min="0"
+              :max="999"
+              :step="1"
+              :precision="0"
+              controls-position="right"
+              style="width: 100%"
+              placeholder="数值越小越靠前"
+              @change="handleSortOrderChange"
+            />
+            <div class="sort-quick-buttons">
+              <el-button size="small" @click="setSortOrder(0)">最高</el-button>
+              <el-button size="small" @click="setSortOrder(10)">高</el-button>
+              <el-button size="small" @click="setSortOrder(50)">中</el-button>
+              <el-button size="small" @click="setSortOrder(100)">低</el-button>
+            </div>
+          </div>
           <div class="form-tip">
             <el-icon><InfoFilled /></el-icon>
-            排序值越小越靠前显示，0表示最高优先级
+            排序值越小越靠前显示，0表示最高优先级，建议使用10的倍数便于调整
           </div>
         </el-form-item>
       </el-form>
@@ -248,7 +295,7 @@
           <template #default>
             <div class="import-tips">
               <p>1. 请按照格式：标签名称,类型,排序 每行一个标签</p>
-              <p>2. 类型：1=服务类，2=娱乐类，3=运动类</p>
+              <p>2. 类型：1=服务类，2=娱乐类，3=运动类，4=个性特质，5=我的爱好，6=外貌风格，7=专业技能，8=热门推荐</p>
               <p>3. 排序：数字越小越靠前，默认为0</p>
               <p>4. 示例：礼仪模特,1,10</p>
             </div>
@@ -356,20 +403,17 @@ const getTagTypeName = (type) => {
   const typeMap = {
     1: '服务类',
     2: '娱乐类',
-    3: '运动类'
+    3: '运动类',
+    4: '个性特质',
+    5: '我的爱好',
+    6: '外貌风格',
+    7: '专业技能',
+    8: '热门推荐'
   }
   return typeMap[type] || '未知'
 }
 
-// 获取标签类型颜色
-const getTagTypeColor = (type) => {
-  const colorMap = {
-    1: 'primary',
-    2: 'success',
-    3: 'warning'
-  }
-  return colorMap[type] || 'info'
-}
+
 
 // 格式化日期
 const formatDate = (dateStr) => {
@@ -625,6 +669,23 @@ const handleSubmit = async () => {
   }
 }
 
+// 处理排序值变化
+const handleSortOrderChange = (value) => {
+  // 确保排序值为非负整数
+  if (value < 0) {
+    form.sort_order = 0
+  } else if (value > 999) {
+    form.sort_order = 999
+  } else {
+    form.sort_order = Math.floor(value)
+  }
+}
+
+// 设置排序值
+const setSortOrder = (value) => {
+  form.sort_order = value
+}
+
 // 重置表单
 const resetForm = () => {
   form.id = null
@@ -756,6 +817,23 @@ onMounted(() => {
 
 .import-tips p {
   margin: 4px 0;
+}
+
+.sort-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sort-quick-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sort-quick-buttons .el-button {
+  flex: 1;
+  min-width: 60px;
 }
 
 @media (max-width: 768px) {

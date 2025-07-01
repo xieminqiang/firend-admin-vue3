@@ -5,6 +5,7 @@ import topic from './modules/topic'
 import system from './modules/system'
 import chat from './modules/chat'
 import service from './modules/service'
+import companion from './modules/companion'
 
 /* Layout */
 import Layout from '@/layout/index.vue'
@@ -77,7 +78,7 @@ export const constantRoutes = [
   },
 ]
 
-export const asyncRoutes = [adminUser, order, topic, system, chat, service]
+export const asyncRoutes = [adminUser, order, topic, system, chat, service, companion]
 
 const createRouterInstance = () =>
   createRouter({
