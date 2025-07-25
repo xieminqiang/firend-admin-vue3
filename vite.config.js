@@ -57,8 +57,10 @@ export default defineConfig({
   define: {
     __VUE_PROD_DEVTOOLS__: false,
     __VUE_OPTIONS_API__: true,
-    // 定义环境变量
-    'import.meta.env.VITE_APP_BASE_API': '"/api"',
+    // 定义环境变量 - 根据环境设置不同的API地址
+    'import.meta.env.VITE_APP_BASE_API': process.env.NODE_ENV === 'production' 
+      ? '"https://api.xieminqiang168.cn/love/admin"' 
+      : '"/api"',
     'import.meta.env.VITE_CDN': '""',
   },
   css: {

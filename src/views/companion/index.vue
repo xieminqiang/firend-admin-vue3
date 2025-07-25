@@ -247,7 +247,7 @@
             拒绝
           </el-button>
           <el-button 
-            v-if="scope.row.intro_video_url && scope.row.intro_video_url !== '' && scope.row.video_review_status === 'pending'"
+            v-if="scope.row.intro_video_url && scope.row.intro_video_url !== ''"
             size="mini" 
             type="warning" 
             @click="handleVideoReview(scope.row)"
@@ -355,6 +355,7 @@ import { Search as ElIconSearch, Refresh as ElIconRefresh } from '@element-plus/
 import { 
   getCompanionApplicationList, 
   updateCompanionApplicationStatus,
+  updateCompanionVideoReviewStatus,
   deleteCompanionApplication,
   getCompanionStatistics
 } from '@/api/companion'

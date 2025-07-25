@@ -110,8 +110,8 @@
                   {{ detail.is_online_name || (detail.is_online === 1 ? '在线' : '离线') }}
                 </el-tag>
               </el-descriptions-item>
-              <el-descriptions-item label="更新时间" :span="2">
-                {{ detail.updated_at || '未审核' }}
+              <el-descriptions-item label="审核时间" :span="2">
+                {{ detail.last_reviewed_at|| '未审核' }}
               </el-descriptions-item>
               <el-descriptions-item label="审核备注" :span="2">
                 {{ detail.remark || '无' }}
