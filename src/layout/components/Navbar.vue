@@ -58,14 +58,28 @@ const handleLogout = async () => {
   try {
     await userStore.logout()
     ElMessage.success('退出登录成功')
-    router.push(`/login?redirect=${route.fullPath}`)
-    // 在Vue3中推荐使用router.go(0)替代location.reload()
-    setTimeout(() => {
-      router.go(0)
-    }, 1000)
+    
+    // 使用replace而不是push，避免浏览器历史记录问题
+    // 添加错误处理，如果路由跳转失败则使用window.location
+    try {
+      await router.replace({
+        path: '/login',
+        query: { redirect: route.fullPath }
+      })
+    } catch (routerError) {
+      console.warn('路由跳转失败，使用window.location:', routerError)
+      // 如果路由跳转失败，直接使用window.location
+      window.location.href = `/login?redirect=${encodeURIComponent(route.fullPath)}`
+    }
   } catch (error) {
     console.error('退出登录失败:', error)
     ElMessage.error('退出登录失败')
+    // 即使退出失败，也尝试跳转到登录页
+    try {
+      await router.replace('/login')
+    } catch {
+      window.location.href = '/login'
+    }
   }
 }
 </script>

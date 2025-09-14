@@ -109,8 +109,8 @@
         <template v-slot="scope">
           <div class="avatar-cell">
             <el-avatar
-              v-if="scope.row.photos && scope.row.photos[0]"
-              :src="scope.row.photos[0]"
+              v-if="scope.row.avatar"
+              :src="$getImageUrl(scope.row.avatar)"
               :size="50"
             />
             <el-avatar v-else :size="50" icon="UserFilled" />
@@ -313,7 +313,7 @@
       </div>
       <div class="video-container" v-if="videoReviewForm.intro_video_url">
         <video 
-          :src="videoReviewForm.intro_video_url" 
+          :src="$getImageUrl(videoReviewForm.intro_video_url)" 
           controls 
           class="intro-video"
           preload="metadata"

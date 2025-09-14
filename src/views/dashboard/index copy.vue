@@ -14,7 +14,119 @@
       </div>
     </div>
 
+    <!-- 📊 数据统计卡片 -->
+    <!-- <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon primary">
+          <el-icon><User /></el-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-value">1,234</h3>
+          <p class="stat-label">用户总数</p>
+          <span class="stat-change positive">+12%</span>
+        </div>
+      </div>
 
+      <div class="stat-card">
+        <div class="stat-icon success">
+          <el-icon><ChatLineRound /></el-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-value">5,678</h3>
+          <p class="stat-label">消息总数</p>
+          <span class="stat-change positive">+8%</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon warning">
+          <el-icon><CollectionTag /></el-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-value">892</h3>
+          <p class="stat-label">话题数量</p>
+          <span class="stat-change positive">+15%</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon danger">
+          <el-icon><Star /></el-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-value">4.8</h3>
+          <p class="stat-label">用户评分</p>
+          <span class="stat-change positive">+0.2</span>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- 📈 图表区域 -->
+    <div class="chart-section">
+      <el-row :gutter="20">
+        <el-col :span="16">
+          <el-card class="chart-card">
+            <template #header>
+              <div class="card-header">
+                <span>📈 用户增长趋势</span>
+                <el-button style="float: right; padding: 3px 0" link>查看详情</el-button>
+              </div>
+            </template>
+            <div class="chart-container">
+              <!-- 这里放置图表组件 -->
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card class="chart-card">
+            <template #header>
+              <div class="card-header">
+                <span>📊 用户分布</span>
+                <el-button style="float: right; padding: 3px 0" link>查看详情</el-button>
+              </div>
+            </template>
+            <div class="chart-container">
+              <!-- 这里放置饼图组件 -->
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+
+    <!-- 📝 最新动态 -->
+    <div class="activity-section">
+      <el-card class="activity-card">
+        <template #header>
+          <div class="card-header">
+            <span>📝 最新动态</span>
+            <el-button style="float: right; padding: 3px 0" link>查看全部</el-button>
+          </div>
+        </template>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-avatar">💕</div>
+            <div class="activity-content">
+              <p class="activity-text">用户小美发布了新的动态</p>
+              <span class="activity-time">2分钟前</span>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-avatar">🌟</div>
+            <div class="activity-content">
+              <p class="activity-text">话题"如何保持长距离恋爱"获得100个点赞</p>
+              <span class="activity-time">5分钟前</span>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-avatar">💖</div>
+            <div class="activity-content">
+              <p class="activity-text">系统已成功匹配10对新情侣</p>
+              <span class="activity-time">10分钟前</span>
+            </div>
+          </div>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -90,7 +202,7 @@ onUnmounted(() => {
   .welcome-content {
     position: relative;
     z-index: 1;
-   
+
     h1 {
       font-size: 32px;
       font-weight: 600;

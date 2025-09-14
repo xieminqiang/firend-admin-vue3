@@ -59,5 +59,5 @@ export default {
    * @type {string}
    * @description OSS图片资源域名
    */
-  ossBaseUrl: 'https://sygx-server-bucket-admin.oss-cn-shanghai.aliyuncs.com',
+  ossBaseUrl: 'https://sbx-server.oss-cn-shenzhen.aliyuncs.com',
 }

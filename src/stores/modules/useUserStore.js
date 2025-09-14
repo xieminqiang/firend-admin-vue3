@@ -98,8 +98,9 @@ export const useUserStore = defineStore('user', () => {
   // 退出登录
   const logout = async () => {
     try {
+      // 先清除token
       removeToken()
-      resetRouter()
+      
       // 重置状态
       token.value = ''
       id.value = 0
@@ -111,9 +112,16 @@ export const useUserStore = defineStore('user', () => {
       tel.value = ''
       sub.value = ''
       exp.value = 0
+      
+      // 重置路由（在状态重置后执行）
+      resetRouter()
+      
       return Promise.resolve()
     } catch (err) {
       console.error('退出登录失败:', err)
+      // 即使出错也要清除本地状态
+      removeToken()
+      token.value = ''
       return Promise.reject(err)
     }
   }

@@ -24,8 +24,8 @@ export default defineConfig({
     open: false,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:9901/love/admin',
-        // target: 'http://0.0.0.0:9901/love/admin',
+        target: 'https://api.suibanxing.cn/love/admin',
+        // target: 'https://api.suibanxing.cn/love/admin',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ''),
@@ -59,7 +59,7 @@ export default defineConfig({
     __VUE_OPTIONS_API__: true,
     // 定义环境变量 - 根据环境设置不同的API地址
     'import.meta.env.VITE_APP_BASE_API': process.env.NODE_ENV === 'production' 
-      ? '"https://api.xieminqiang168.cn/love/admin"' 
+      ? '"/api"' 
       : '"/api"',
     'import.meta.env.VITE_CDN': '""',
   },

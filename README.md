@@ -346,6 +346,48 @@ deletePriceTemplateLevel(id)      // 删除等级价格
 - 优化数据处理函数，增加数据类型验证
 - 改进数组解构赋值为单独的属性赋值，提高代码可读性和错误定位能力
 
+#### 7. 生产环境CORS跨域错误修复 ✅
+**问题**：本地开发环境 `npm run dev` 可以正常运行，但部署到服务器后出现 CORS 跨域错误  
+**原因**：
+- 本地开发环境通过 Vite 代理处理跨域，无跨域问题
+- 生产环境前端(`www.suibanxing.cn`)直接请求后端API(`api.suibanxing.cn`)，产生跨域问题
+- nginx配置中CORS头设置顺序错误，OPTIONS预检请求处理不当
+
+**解决方案**：
+- ✅ 修复nginx代理配置：`proxy_pass` 指向正确的后端地址
+- ✅ 优化CORS头设置：使用 `always` 参数确保总是添加CORS头
+- ✅ 正确处理OPTIONS预检请求：在代理之前处理OPTIONS请求
+- ✅ 调整环境变量配置：生产环境也使用相对路径 `/api`
+- ✅ 创建自动部署脚本：`deploy-cors-fix.sh`
+- ✅ 提供详细故障排除指南：`CORS_TROUBLESHOOTING.md`
+
+**技术细节**：
+```nginx
+# 修复后的nginx配置
+location /api/ {
+    # 先处理OPTIONS预检请求
+    if ($request_method = 'OPTIONS') {
+        add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Methods 'GET, POST, PUT, DELETE, OPTIONS';
+        add_header Access-Control-Allow-Headers 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization';
+        add_header Access-Control-Max-Age 1728000;
+        add_header Content-Type 'text/plain; charset=utf-8';
+        add_header Content-Length 0;
+        return 204;
+    }
+    
+    # 代理到后端API
+    proxy_pass https://api.suibanxing.cn/love/admin/;
+    proxy_set_header Host api.suibanxing.cn;
+    
+    # 添加CORS头（使用always确保总是添加）
+    add_header Access-Control-Allow-Origin * always;
+    add_header Access-Control-Allow-Methods 'GET, POST, PUT, DELETE, OPTIONS' always;
+    add_header Access-Control-Allow-Headers 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
+    add_header Access-Control-Expose-Headers 'Content-Length,Content-Range' always;
+}
+```
+
 ### 修复后的技术栈
 - **前端框架**：Vue 3.4.0
 - **UI组件库**：Element Plus 2.4.4

@@ -68,18 +68,29 @@ export function isValidImagePath(imagePath) {
 /**
  * 从完整URL中提取相对路径
  * @param {string} fullUrl - 完整的图片URL
- * @returns {string} 相对路径
+ * @returns {string} 相对路径，保持开头的 /
  */
 export function getRelativePath(fullUrl) {
   if (!fullUrl) return ''
   
   const baseUrl = settings.ossBaseUrl
   if (fullUrl.startsWith(baseUrl)) {
-    return fullUrl.replace(baseUrl, '').replace(/^\//, '')
+    // 保持开头的 /，确保路径格式为 /img/20250811/...
+    return fullUrl.replace(baseUrl, '')
   }
   
   return fullUrl
 }
+
+// 测试用例和说明
+/*
+ * 测试 getRelativePath 函数：
+ * 
+ * 输入: "https://example.com/img/20250811/ca5e21657e6e79a0e26b9c30fbe52274/00fd4229-c609-4c97-9e21-b1af39ee465d.png"
+ * 输出: "/img/20250811/ca5e21657e6e79a0e26b9c30fbe52274/00fd4229-c609-4c97-9e21-b1af39ee465d.png"
+ * 
+ * 确保保存时保持开头的 /，这样后端就能正确识别为绝对路径
+ */
 
 // 默认导出
 export default {

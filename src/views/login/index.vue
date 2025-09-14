@@ -58,7 +58,7 @@
             </span>
           </el-form-item>
 
-          <el-form-item prop="verify_code">
+          <!-- <el-form-item prop="verify_code">
             <span class="svg-container">
               <svg-icon icon-class="verify" />
             </span>
@@ -73,7 +73,7 @@
             <span class="show-virify" @click="changeVerify">
               <img :src="verify_code" alt="验证码">
             </span>
-          </el-form-item>
+          </el-form-item> -->
 
           <el-button
             :loading="loading"
@@ -85,6 +85,13 @@
           </el-button>
         </el-form>
       </div>
+    </div>
+    
+    <!-- 备案信息 -->
+    <div class="beian-info">
+      <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="noopener noreferrer">
+        粤ICP备2025452418号-2
+      </a>
     </div>
   </div>
 </template>
@@ -105,8 +112,8 @@ const passwordRef = ref(null)
 const verifyCodeRef = ref(null)
 
 const loginForm = reactive({
-  user_name: 'admin',
-  password: 'admin',
+  user_name: 'bj',
+  password: '',
   verify_code: '9527'
 })
 
@@ -478,6 +485,38 @@ $gradient-end-dark: #3f9eee;
 
     &:active {
       transform: translateY(1px);
+    }
+  }
+
+  .beian-info {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    animation: fadeIn 0.8s ease-out 1s both;
+
+    a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 12px;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
     }
   }
 }

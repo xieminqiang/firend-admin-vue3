@@ -57,7 +57,7 @@ const rules = {
     { required: true, trigger: 'blur', message: '请输入话题名' },
   ],
   topic_icon: [
-    { required: true, trigger: 'blur', message: '请上传话题icon' },
+    // 话题icon不是必填项
   ],
 }
 

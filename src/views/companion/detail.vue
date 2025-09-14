@@ -180,8 +180,8 @@
                   class="image-item"
                 >
                   <el-image
-                    :src="photo"
-                    :preview-src-list="detail.photos"
+                    :src="$getImageUrl(photo)"
+                    :preview-src-list="detail.photos.map(photo => $getImageUrl(photo))"
                     :preview-teleported="true"
                     fit="cover"
                     class="photo-image"
@@ -204,7 +204,7 @@
             
             <div class="video-container">
               <video 
-                :src="detail.intro_video_url" 
+                :src="$getImageUrl(detail.intro_video_url)" 
                 controls 
                 class="intro-video"
                 preload="metadata"
